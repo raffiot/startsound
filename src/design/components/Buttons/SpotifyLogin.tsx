@@ -1,9 +1,7 @@
-import { ReactNode } from "react";
 import { IPressableProps, Pressable, Image, Text } from "native-base";
 
 export type SocialLoginProps = {
   title: string;
-  children?: ReactNode;
 } & IPressableProps;
 export const SpotifyLogin = ({
   onPress,
