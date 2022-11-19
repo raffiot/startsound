@@ -6,24 +6,24 @@ const newTheme = {
       400: "#1DB954",
     },
   },
-  // fontConfig: {
-  //   Caveat: {
-  //     400: {
-  //       normal: "Caveat-Medium",
-  //     },
-  //     500: {
-  //       normal: "Caveat-Regular",
-  //     },
-  //     600: {
-  //       normal: "Caveat-SemiBold",
-  //     },
-  //     700: {
-  //       normal: "Caveat-Bold",
-  //     },
-  //   },
-  // },
+  fontConfig: {
+    Caveat: {
+      400: {
+        normal: "Caveat-Medium",
+      },
+      // 500: {
+      //   normal: "Caveat-Regular",
+      // },
+      // 600: {
+      //   normal: "Caveat-SemiBold",
+      // },
+      // 700: {
+      //   normal: "Caveat-Bold",
+      // },
+    },
+  },
   fonts: {
-    // body: "Caveat",
+    body: "Caveat",
     heading: "Pacifico-Regular",
   },
 };

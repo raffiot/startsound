@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
-import { Box, Heading, Pressable, Center, Image, Text } from "native-base";
-import { SpotifyLogin } from "../design/components/Buttons/SpotifyLogin";
+import { Box, Heading, Center } from "native-base";
+import { SpotifyLogin } from "@/components/Buttons/SpotifyLogin";
 
 export const WelcomeScreen = () => {
   const connectSpotify = useCallback(() => {}, []);

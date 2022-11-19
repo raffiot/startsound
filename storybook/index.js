@@ -1,7 +1,3 @@
-// if you use expo remove this line
-import { AppRegistry } from "react-native";
-import { Center, NativeBaseProvider } from "native-base";
-
 import {
   getStorybookUI,
   configure,
@@ -23,6 +19,10 @@ configure(() => {
 
 // Refer to https://github.com/storybookjs/react-native/tree/master/app/react-native#getstorybookui-options
 // To find allowed options for getStorybookUI
-const StorybookUIRoot = getStorybookUI({});
+const StorybookUIRoot = getStorybookUI({
+  asyncStorage: null,
+  shouldPersistSelection: true,
+  onDeviceUI: true,
+});
 
 export default StorybookUIRoot;
