@@ -8,12 +8,20 @@ export type InputTextProps = {
 export const InputText = ({ label, placeholder, emoji }: InputTextProps) => {
   return (
     <Box>
-      <Text pb="2">{label}</Text>
+      <Text pb="2" fontSize="xl">
+        {label}
+      </Text>
       <Input
-        w="50%"
+        w="70%"
         py="2"
-        InputLeftElement={<Text px="2">{emoji}</Text>}
+        size="xl"
+        InputLeftElement={
+          <Text px="2" fontSize="xl">
+            {emoji}
+          </Text>
+        }
         placeholder={placeholder}
+        backgroundColor="white"
       />
     </Box>
   );

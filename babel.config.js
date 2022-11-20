@@ -10,6 +10,7 @@ module.exports = function (api) {
             "@/design": "./src/design/index.ts",
             "@/components": "./src/design/components",
             "@/screens": "./src/screens",
+            "@/navigators": "./src/navigators",
           },
         },
       ],
