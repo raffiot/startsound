@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Pressable, Text } from "native-base";
+import { Pressable, Text } from "native-base";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { useCallback } from "react";
 

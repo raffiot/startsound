@@ -14,7 +14,9 @@ export const UsernameScreen = ({ navigation }: Props) => {
   return (
     <Box flex="1" my="16" display="flex" justifyContent="space-between">
       <Center my="auto">
-        <InputText label="Your Username" emoji="👤" placeholder="Alexandre" />
+        <Box w="70%">
+          <InputText label="Your Username" emoji="👤" placeholder="Alexandre" />
+        </Box>
       </Center>
       <Center>
         <Submit onPress={onSubmit} title="Next >" />

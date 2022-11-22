@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from "react";
 import { Box, Center } from "native-base";
 import { Submit } from "@/components/Buttons/Submit";
-import { Platform } from "react-native";
 import { DatetimePicker } from "@/components/Input/DatetimePicker";
+import { InputText } from "@/components/Input/InputText";
 
 export const BirthScreen = () => {
   const [date, setDate] = useState(new Date(1598051730000));
@@ -44,9 +44,16 @@ export const BirthScreen = () => {
             emoji="🕛"
           />
         </Box>
+        <Box w="70%" mt="16">
+          <InputText
+            emoji="🌍"
+            label="Your birth city"
+            placeholder="Grenoble"
+          />
+        </Box>
       </Center>
       <Center>
-        <Submit onPress={onSubmit} title="Next >" />
+        <Submit onPress={onSubmit} title="Submit" />
       </Center>
     </Box>
   );
