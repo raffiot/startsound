@@ -8,15 +8,17 @@ export type InputTextProps = {
 export const InputText = ({ label, placeholder, emoji }: InputTextProps) => {
   return (
     <Box>
-      <Text pb="2" fontSize="xl">
+      <Text pb="2" fontSize="2xl">
         {label}
       </Text>
       <Input
         w="70%"
-        py="2"
-        size="xl"
+        p="2"
+        size="2xl"
+        fontSize="2xl"
+        rounded="lg"
         InputLeftElement={
-          <Text px="2" fontSize="xl">
+          <Text mx="2" fontSize="2xl">
             {emoji}
           </Text>
         }

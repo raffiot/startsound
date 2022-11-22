@@ -1,10 +1,15 @@
 import React, { useCallback } from "react";
 import { Box, Center } from "native-base";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { InputText } from "@/components/Input/InputText";
 import { Submit } from "@/components/Buttons/Submit";
+import { RootStackParamList } from "@/navigators/types";
 
-export const UsernameScreen = () => {
-  const onSubmit = useCallback(() => {}, []);
+type Props = NativeStackScreenProps<RootStackParamList, "Username">;
+export const UsernameScreen = ({ navigation }: Props) => {
+  const onSubmit = useCallback(() => {
+    return navigation.navigate("Birth");
+  }, []);
 
   return (
     <Box flex="1" my="16" display="flex" justifyContent="space-between">

@@ -1,6 +1,6 @@
 import React from "react";
 import * as Font from "expo-font";
-import { Center, NativeBaseProvider } from "native-base";
+import { Box, Center, NativeBaseProvider } from "native-base";
 import { theme, config } from "../src/design";
 
 export const ThemeDecorator = (getStory) => {
@@ -14,7 +14,9 @@ export const ThemeDecorator = (getStory) => {
 
   return (
     <NativeBaseProvider theme={theme} config={config}>
-      <Center>{getStory()}</Center>
+      <Box safeArea>
+        <Center>{getStory()}</Center>
+      </Box>
     </NativeBaseProvider>
   );
 };
