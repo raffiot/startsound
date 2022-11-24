@@ -1,10 +1,13 @@
 import React, { useCallback, useState } from "react";
 import { Box, Center } from "native-base";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Submit } from "@/components/Buttons/Submit";
 import { DatetimePicker } from "@/components/Input/DatetimePicker";
 import { InputText } from "@/components/Input/InputText";
+import { RootStackParamList } from "@/navigators/types";
 
-export const BirthScreen = () => {
+type Props = NativeStackScreenProps<RootStackParamList, "Birth">;
+export const BirthScreen = ({ navigation }: Props) => {
   const [date, setDate] = useState(new Date(1598051730000));
   const onDateChange = useCallback(
     (date: Date) => {
@@ -21,7 +24,9 @@ export const BirthScreen = () => {
     [setDate],
   );
 
-  const onSubmit = useCallback(() => {}, []);
+  const onSubmit = useCallback(() => {
+    return navigation.navigate("Loading");
+  }, []);
 
   return (
     <Box flex="1" my="16" display="flex" justifyContent="space-between">

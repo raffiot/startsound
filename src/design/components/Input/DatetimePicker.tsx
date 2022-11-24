@@ -53,7 +53,7 @@ export const DatetimePicker = ({
         <Text color="black" fontSize="2xl" mx="2">
           {emoji}
         </Text>
-        <Text color="black" fontSize="2xl" pr="1">
+        <Text color="black" fontSize="2xl" pr="2">
           {displayDate(value)}
         </Text>
         <DateTimePickerModal

@@ -4,7 +4,12 @@ import { DatetimePicker } from "@/components/Input/DatetimePicker";
 
 storiesOf("Input", module)
   .add("Input Username", () => (
-    <InputText label="Your Username" placeholder="Alexandre" emoji="👤" />
+    <InputText
+      label="Your Username"
+      placeholder="Alexandre"
+      emoji="👤"
+      w="70%"
+    />
   ))
   .add("Default InlineDatetimePicker", () => (
     <>

@@ -14,7 +14,19 @@ export const ThemeDecorator = (getStory) => {
 
   return (
     <NativeBaseProvider theme={theme} config={config}>
-      <Box safeArea>
+      <Box
+        bg={{
+          linearGradient: {
+            colors: ["lightBlue.300", "violet.800"],
+            start: [0, 0],
+            end: [1, 1],
+          },
+        }}
+        width="100%"
+        height="100%"
+        p="4"
+        safeArea
+      >
         <Center>{getStory()}</Center>
       </Box>
     </NativeBaseProvider>
