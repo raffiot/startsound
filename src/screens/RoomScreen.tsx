@@ -1,4 +1,5 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState, useMemo } from "react";
+import { Audio, AVPlaybackStatusSuccess } from "expo-av";
 import {
   Box,
   Heading,
@@ -6,26 +7,71 @@ import {
   Flex,
   Pressable,
   Text,
-  FlatList,
+  ScrollView,
+  Spinner,
 } from "native-base";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "@/navigators/types";
 import { AdditionalContent } from "@/components/Buttons/AdditionalContent";
+import { MusicPreview } from "@/components/MusicPreview/MusicPreview";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Room">;
 export const RoomScreen = ({ navigation, route }: Props) => {
-  const { name, isFavorite } = route.params.item;
-  const percentage = Math.floor(Math.random() * 50) + 50;
-  const colorShade = Math.floor(percentage / 10) * 100;
+  const [sound, setSound] = useState<Audio.Sound>();
+  const [songIsPlaying, setSoundIsPlaying] = useState(false);
+  const [isMusicPlayerLoading, setIsMusicPlayerLoading] = useState(true);
+  const { name, compatibilityPercentage } = route.params.item;
+
+  const colorShade = useMemo(
+    () => Math.floor(compatibilityPercentage / 10) * 100,
+    [compatibilityPercentage],
+  );
   const attributes = [
     "🔥 You share great positivity",
     "🕺 You are both higly energize",
     "🙉 You have both a strong introspection",
   ];
 
-  const goBack = useCallback(() => {
+  const goBack = useCallback(async () => {
+    if (sound) {
+      const status = await sound.getStatusAsync();
+      if (status.isLoaded && (status as AVPlaybackStatusSuccess).isPlaying) {
+        await sound.unloadAsync();
+      }
+    }
     return navigation.goBack();
-  }, [navigation]);
+  }, [navigation, sound]);
+
+  const playSound = useCallback(async () => {
+    if (!sound) return;
+    const status = await sound.getStatusAsync();
+    if (status.isLoaded && (status as AVPlaybackStatusSuccess).isPlaying) {
+      setSoundIsPlaying(false);
+      await sound.pauseAsync();
+    } else {
+      setSoundIsPlaying(true);
+      await sound.playAsync();
+    }
+  }, [sound]);
+
+  useEffect(() => {
+    const loadAudio = async () => {
+      const { sound } = await Audio.Sound.createAsync({
+        uri: "https://p.scdn.co/mp3-preview/95a5bddd5c989e229caf575ef420cc45a0f2fc21?cid=774b29d4f13844c495f206cafdad9c86",
+      });
+      setSound(sound);
+      setIsMusicPlayerLoading(false);
+    };
+    loadAudio();
+  }, []);
+
+  useEffect(() => {
+    return sound
+      ? () => {
+          sound.unloadAsync();
+        }
+      : undefined;
+  }, [sound]);
 
   return (
     <Box my="8" px="4">
@@ -45,43 +91,58 @@ export const RoomScreen = ({ navigation, route }: Props) => {
           </Text>
         </Flex>
       </Box>
+      <ScrollView mb={8}>
+        {/* Compatibility */}
+        <Center pt="12">
+          <Box
+            rounded="full"
+            borderWidth="6"
+            borderColor={`rose.${colorShade}`}
+            p="8"
+          >
+            <Text
+              fontFamily="heading"
+              fontSize="4xl"
+              color={`rose.${colorShade}`}
+            >{`${compatibilityPercentage}%`}</Text>
+          </Box>
+        </Center>
 
-      {/* Compatibility */}
-      <Center pt="12">
-        <Box
-          rounded="full"
-          borderWidth="6"
-          borderColor={`rose.${colorShade}`}
-          p="8"
-        >
-          <Text
-            fontFamily="heading"
-            fontSize="4xl"
-            color={`rose.${colorShade}`}
-          >{`${percentage}%`}</Text>
-        </Box>
-      </Center>
+        {/* Attributes */}
+        <Flex pt="8">
+          <Heading fontFamily="heading" fontSize="2xl" lineHeight={64}>
+            Your Compatibility:
+          </Heading>
+          {attributes.map((item, i) => (
+            <Text fontSize="2xl" p="2" key={`attribute-${i}`}>
+              {item}
+            </Text>
+          ))}
+          <Center pt="4">
+            <AdditionalContent title="🔓 Unlock more attributes" />
+          </Center>
+        </Flex>
 
-      {/* Attributes */}
-      <Flex pt="12">
-        <FlatList
-          data={attributes}
-          renderItem={({ item }: { item: string }) => {
-            return (
-              <Text fontSize="2xl" p="2">
-                {item}
-              </Text>
-            );
-          }}
-          ListFooterComponent={() => {
-            return (
-              <Center pt="4">
-                <AdditionalContent title="🔓 Unlock more attributes" />
-              </Center>
-            );
-          }}
-        />
-      </Flex>
+        {/* Song */}
+        <Flex pt="12">
+          <Heading fontFamily="heading" fontSize="2xl" lineHeight={32}>
+            Your astro song:
+          </Heading>
+          <Center mt="4">
+            {isMusicPlayerLoading ? (
+              <Spinner size="lg" />
+            ) : (
+              <MusicPreview
+                artist="Alicia Keys"
+                title="If I Ain't Got You"
+                onPress={playSound}
+                isPlaying={songIsPlaying}
+              />
+            )}
+          </Center>
+        </Flex>
+        {/* <Text fontSize="3xl">YOOOOO</Text> */}
+      </ScrollView>
     </Box>
   );
 };

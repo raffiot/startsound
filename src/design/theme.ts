@@ -21,10 +21,15 @@ const newTheme = {
       //   normal: "Caveat-Bold",
       // },
     },
+    Pacifico: {
+      700: {
+        normal: "Pacifico-Regular",
+      },
+    },
   },
   fonts: {
     body: "Caveat",
-    heading: "Pacifico-Regular",
+    heading: "Pacifico",
   },
 };
 

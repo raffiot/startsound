@@ -119,6 +119,7 @@ export const HomeScreen = ({ navigation }: Props) => {
           <Text fontSize="3xl">My rooms history</Text>
           <FlatList
             contentContainerStyle={{ paddingBottom: 128 }}
+            mb={8}
             data={dataSorted}
             showsVerticalScrollIndicator={false}
             renderItem={({ item }: { item: Room }) => {

@@ -32,7 +32,7 @@ export const LoadingScreen = ({ navigation }: Props) => {
       </Center>
       <Box flex="1" my="auto">
         <Center my="auto">
-          <Text fontSize="2xl">Loading...</Text>
+          <Text fontSize="2xl">Loading your star profile...</Text>
           <Box w="90%">
             <Progress size="2xl" value={loadingValue} />
           </Box>

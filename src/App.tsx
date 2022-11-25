@@ -3,7 +3,7 @@ import { NativeBaseProvider, Box } from "native-base";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { theme, config } from "@/design";
-import { MainNavigator } from "./navigators/MainNavigator";
+import { MainNavigator } from "@/navigators/MainNavigator";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
