@@ -11,10 +11,21 @@ export const WelcomeScreen = ({ navigation }: Props) => {
   }, []);
 
   return (
-    <Box flex="1" my="16" display="flex" justifyContent="space-between">
+    <Box flex="1" my="16" px="4" display="flex" justifyContent="space-between">
       <Center>
         <Heading lineHeight={64} fontFamily="heading" size="2xl">
           ✨ StarSound ✨
+        </Heading>
+      </Center>
+      <Center>
+        <Heading
+          lineHeight={64}
+          fontFamily="heading"
+          size="2xl"
+          opacity={80}
+          textAlign="center"
+        >
+          Music & Astro compatibility
         </Heading>
       </Center>
       <Center>
