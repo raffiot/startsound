@@ -1,10 +1,12 @@
 import { Room } from "@/types/room";
 
-export type RootStackParamList = {
+export type AuthStackParamList = {
   Welcome: undefined;
   Username: undefined;
   Birth: undefined;
-  Loading: undefined;
+};
+
+export type UserStackParamList = {
   Home: undefined;
   Room: { item: Room };
 };

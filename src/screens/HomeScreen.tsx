@@ -11,7 +11,7 @@ import {
   FlatList,
 } from "native-base";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "@/navigators/types";
+import { UserStackParamList } from "src/navigation/types";
 import { RoomItem } from "@/components/RoomItem/RoomItem";
 import { Room } from "@/types/room";
 import { rooms as data } from "../data";
@@ -57,7 +57,7 @@ const ListRoomItem = ({
 
 const MemoListRoomItem = memo(ListRoomItem);
 
-type Props = NativeStackScreenProps<RootStackParamList, "Home">;
+type Props = NativeStackScreenProps<UserStackParamList, "Home">;
 export const HomeScreen = ({ navigation }: Props) => {
   const name = "Alexandre";
   const link = "https://www.soundstar.com/invite/alexandre";

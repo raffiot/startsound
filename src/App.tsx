@@ -3,7 +3,7 @@ import { NativeBaseProvider, Box } from "native-base";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { theme, config } from "@/design";
-import { MainNavigator } from "@/navigators/MainNavigator";
+import RootNavigation from "@/navigation/index";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -46,7 +46,7 @@ export default function App() {
         safeArea
         onLayout={onLayoutRootView}
       >
-        <MainNavigator />
+        <RootNavigation />
       </Box>
     </NativeBaseProvider>
   );

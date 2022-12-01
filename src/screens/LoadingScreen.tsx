@@ -1,13 +1,16 @@
+// TODO: SEARCH WHERE TO PUT THIS SCREEN
+
 import React, { useState, useEffect } from "react";
 import { Box, Heading, Center, Progress, Text } from "native-base";
-import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "@/navigators/types";
+// import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+// import { UserStackParamList } from "src/navigation/types";
 
-type Props = NativeStackScreenProps<RootStackParamList, "Loading">;
+// type Props = NativeStackScreenProps<RootStackParamList, "Loading">;
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
-export const LoadingScreen = ({ navigation }: Props) => {
+// export const LoadingScreen = ({ navigation }: Props) => {
+export const LoadingScreen = () => {
   const [loadingValue, setLoadingValue] = useState(0);
   const fakeLoading = async () => {
     await sleep(2000);
@@ -16,7 +19,7 @@ export const LoadingScreen = ({ navigation }: Props) => {
     setLoadingValue(62);
     await sleep(2000);
     setLoadingValue(100);
-    navigation.navigate("Home");
+    // navigation.navigate("Home");
   };
 
   useEffect(() => {

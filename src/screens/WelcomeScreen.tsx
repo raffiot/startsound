@@ -1,14 +1,20 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Box, Heading, Center } from "native-base";
+import { makeRedirectUri, useAuthRequest } from "expo-auth-session";
+import Constants from "expo-constants";
 import { SpotifyLogin } from "@/components/Buttons/SpotifyLogin";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "@/navigators/types";
+import { AuthStackParamList } from "@/navigation/types";
+import { useSpotifyLogin } from "@/hooks/useSpotifyLogin";
 
-type Props = NativeStackScreenProps<RootStackParamList, "Welcome">;
+type Props = NativeStackScreenProps<AuthStackParamList, "Welcome">;
 export const WelcomeScreen = ({ navigation }: Props) => {
-  const connectSpotify = useCallback(() => {
+  const { spotifyLogin } = useSpotifyLogin();
+
+  const connectSpotify = useCallback(async () => {
+    await spotifyLogin();
     return navigation.navigate("Username");
-  }, []);
+  }, [spotifyLogin, navigation]);
 
   return (
     <Box flex="1" my="16" px="4" display="flex" justifyContent="space-between">

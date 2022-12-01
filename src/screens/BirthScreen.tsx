@@ -4,9 +4,9 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Submit } from "@/components/Buttons/Submit";
 import { DatetimePicker } from "@/components/Input/DatetimePicker";
 import { InputText } from "@/components/Input/InputText";
-import { RootStackParamList } from "@/navigators/types";
+import { AuthStackParamList } from "@/navigation/types";
 
-type Props = NativeStackScreenProps<RootStackParamList, "Birth">;
+type Props = NativeStackScreenProps<AuthStackParamList, "Birth">;
 export const BirthScreen = ({ navigation }: Props) => {
   const [date, setDate] = useState(new Date(1598051730000));
   const onDateChange = useCallback(
@@ -24,9 +24,8 @@ export const BirthScreen = ({ navigation }: Props) => {
     [setDate],
   );
 
-  const onSubmit = useCallback(() => {
-    return navigation.navigate("Loading");
-  }, []);
+  // TODO: Define how to pass from auth stack to user stack
+  const onSubmit = useCallback(() => {}, []);
 
   return (
     <Box flex="1" my="16" display="flex" justifyContent="space-between">

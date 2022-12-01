@@ -11,11 +11,11 @@ import {
   Spinner,
 } from "native-base";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "@/navigators/types";
+import { UserStackParamList } from "src/navigation/types";
 import { AdditionalContent } from "@/components/Buttons/AdditionalContent";
 import { MusicPreview } from "@/components/MusicPreview/MusicPreview";
 
-type Props = NativeStackScreenProps<RootStackParamList, "Room">;
+type Props = NativeStackScreenProps<UserStackParamList, "Room">;
 export const RoomScreen = ({ navigation, route }: Props) => {
   const [sound, setSound] = useState<Audio.Sound>();
   const [songIsPlaying, setSoundIsPlaying] = useState(false);
