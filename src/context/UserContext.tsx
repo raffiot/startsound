@@ -2,10 +2,11 @@ import { createContext, useState } from "react";
 
 type UserDetails = {
   id: string;
-  username?: string;
-  birthplace?: string;
-  bitrhday?: Date;
+  username?: string | null;
+  birthplace?: string | null;
+  bitrhday?: Date | null;
 };
+
 export interface UserContextProps {
   user: UserDetails | null;
   isProfileComplete: boolean;

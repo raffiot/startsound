@@ -6,6 +6,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "storybook": "start-storybook -p 7007",
+    "codegen": "graphql-codegen --config codegen.yml",
     "build-storybook": "build-storybook"
   },
   "dependencies": {
@@ -36,6 +37,11 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
+    "@graphql-codegen/cli": "^2.16.1",
+    "@graphql-codegen/import-types-preset": "^2.2.6",
+    "@graphql-codegen/typescript": "^2.8.5",
+    "@graphql-codegen/typescript-operations": "^2.5.10",
+    "@graphql-codegen/typescript-react-apollo": "^3.3.7",
     "@storybook/addon-actions": "^5.3",
     "@storybook/addon-knobs": "^5.3",
     "@storybook/addon-links": "^5.3",

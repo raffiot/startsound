@@ -1,11 +1,12 @@
 import { useContext, useEffect } from "react";
 import Constants from "expo-constants";
 import { makeRedirectUri, useAuthRequest } from "expo-auth-session";
-import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
-import LOGIN_MUTATION from "@/graphql/login";
-import ME_QUERY from "@/graphql/user";
 import { AuthContext } from "@/context/AuthContext";
 import { UserContext } from "@/context/UserContext";
+import {
+  useLoginMutation,
+  useMeLazyQuery,
+} from "@/graphql/__generated__/hooks";
 
 const SPOTIFY_DISCOVERY = {
   authorizationEndpoint: "https://accounts.spotify.com/authorize",
@@ -14,7 +15,6 @@ const SPOTIFY_DISCOVERY = {
 const SCOPES = ["user-read-email", "user-top-read"];
 
 export const useLogin = () => {
-  const [getMeUser, { data }] = useLazyQuery(ME_QUERY);
   const { auth, setAuth } = useContext(AuthContext);
   const { setUser } = useContext(UserContext);
   const redirectUri = makeRedirectUri({});
@@ -28,11 +28,16 @@ export const useLogin = () => {
     SPOTIFY_DISCOVERY,
   );
 
-  const [loginMutation] = useMutation(LOGIN_MUTATION, {
-    onCompleted: ({
-      login: { access_token: accessToken, refresh_token: refreshToken },
-    }) => {
-      setAuth({ accessToken, refreshToken });
+  const [loginMutation] = useLoginMutation({
+    onCompleted: (data) => {
+      if (data.login?.access_token && data.login?.refresh_token) {
+        setAuth({
+          accessToken: data.login?.access_token,
+          refreshToken: data.login?.refresh_token,
+        });
+      } else {
+        console.log("ERROR: Loggin didnt worked");
+      }
     },
   });
 
@@ -48,9 +53,11 @@ export const useLogin = () => {
 
   useEffect(() => {
     if (auth?.accessToken) {
-      getMeUser({
-        onCompleted: ({ me }) => {
-          setUser(me);
+      useMeLazyQuery({
+        onCompleted: (data) => {
+          if (data.me) {
+            setUser(data.me);
+          }
         },
       });
     }

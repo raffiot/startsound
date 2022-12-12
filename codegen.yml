@@ -1,0 +1,40 @@
+# Endpoint API, the following URL is a example
+schema: "http://localhost:8080"
+
+overwrite: true
+# Format files
+hooks:
+  afterAllFileWrite:
+    - prettier --write
+generates:
+  # Get schemas from server
+  src/graphql/__generated__/schemas.tsx:
+    documents: "src/graphql/**/**.ts"
+    plugins:
+      - typescript
+    config:
+      namingConvention:
+        enumValues: "change-case-all#lowerCase"
+  # Create operations based on queries
+  src/graphql/__generated__/operations.tsx:
+    documents: "src/graphql/**/**.ts"
+    preset: import-types
+    presetConfig:
+      typesPath: ./schemas
+    plugins:
+      - typescript-operations
+
+  # 1. Export GraphQL documents
+  # 2. React interface
+  src/graphql/__generated__/hooks.tsx:
+    documents: "src/graphql/**/**.ts"
+    preset: import-types
+    presetConfig:
+      typesPath: ./operations
+    plugins:
+      - typescript-react-apollo
+    config:
+      # Optionals
+      withHOC: false
+      withComponent: false
+      withHooks: true
