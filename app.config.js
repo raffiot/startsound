@@ -40,6 +40,7 @@ export default {
       firebaseMeasurementId: process.env.FIREBASE_MEASUREMENT_ID,
       firebaseRegion: process.env.FIREBASE_REGION,
       spotifyClientId: process.env.SPOTIFY_CLIENT_ID,
+      graphqlApiUrl: process.env.GRAPHQL_API_URL,
     },
   },
 };

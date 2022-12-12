@@ -1,6 +1,5 @@
 import { initializeApp } from "firebase/app";
 import Constants from "expo-constants";
-import { getFunctions } from "firebase/functions";
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -14,10 +13,5 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-
-export const functions = getFunctions(
-  app,
-  Constants.manifest?.extra?.firebaseRegion,
-);
 
 export default app;

@@ -1,10 +1,9 @@
-import React from "react";
-import { useAuthentication } from "@/hooks/useAuthentication";
+import React, { useContext } from "react";
 import { UserStack } from "./UserStack";
 import { AuthStack } from "./AuthStack";
+import { UserContext } from "@/context/UserContext";
 
 export default function RootNavigation() {
-  const { user } = useAuthentication();
-
-  return user ? <UserStack /> : <AuthStack />;
+  const { user, isProfileComplete } = useContext(UserContext);
+  return user && isProfileComplete ? <UserStack /> : <AuthStack />;
 }

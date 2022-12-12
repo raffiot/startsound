@@ -10,7 +10,9 @@
       "@/navigation/*": ["src/navigation/*"],
       "@/types/*": ["./src/types/*"],
       "@/hooks/*": ["./src/hooks/*"],
-      "@/config/*": ["./src/config/*"]
+      "@/config/*": ["./src/config/*"],
+      "@/context/*": ["./src/context/*"],
+      "@/graphql/*": ["./src/graphql/*"]
     }
   }
 }

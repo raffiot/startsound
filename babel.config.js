@@ -14,6 +14,8 @@ module.exports = function (api) {
             "@/types": "./src/types",
             "@/hooks": "./src/hooks",
             "@/config": "./src/config",
+            "@/context": "./src/context",
+            "@/graphql": "./src/graphql",
           },
         },
       ],
