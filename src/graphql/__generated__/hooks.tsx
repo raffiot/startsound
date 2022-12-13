@@ -59,7 +59,7 @@ export const MeDocument = gql`
       id
       username
       birthplace
-      bitrhday
+      birthday
     }
   }
 `;
@@ -105,4 +105,55 @@ export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<
   Types.MeQuery,
   Types.MeQueryVariables
+>;
+export const UpdateUserDocument = gql`
+  mutation UpdateUser($id: UUID!, $input: UserUpdateInput) {
+    userUpdate(id: $id, input: $input) {
+      id
+    }
+  }
+`;
+export type UpdateUserMutationFn = Apollo.MutationFunction<
+  Types.UpdateUserMutation,
+  Types.UpdateUserMutationVariables
+>;
+
+/**
+ * __useUpdateUserMutation__
+ *
+ * To run a mutation, you first call `useUpdateUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateUserMutation, { data, loading, error }] = useUpdateUserMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateUserMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    Types.UpdateUserMutation,
+    Types.UpdateUserMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    Types.UpdateUserMutation,
+    Types.UpdateUserMutationVariables
+  >(UpdateUserDocument, options);
+}
+export type UpdateUserMutationHookResult = ReturnType<
+  typeof useUpdateUserMutation
+>;
+export type UpdateUserMutationResult =
+  Apollo.MutationResult<Types.UpdateUserMutation>;
+export type UpdateUserMutationOptions = Apollo.BaseMutationOptions<
+  Types.UpdateUserMutation,
+  Types.UpdateUserMutationVariables
 >;

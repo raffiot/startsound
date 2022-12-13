@@ -33,9 +33,9 @@ export default function App() {
 
   return (
     <NativeBaseProvider theme={theme} config={config}>
-      <AuthProvider>
-        <UserProvider>
-          <CustomApolloProvider>
+      <CustomApolloProvider>
+        <AuthProvider>
+          <UserProvider>
             <Box
               bg={{
                 linearGradient: {
@@ -51,9 +51,9 @@ export default function App() {
             >
               <RootNavigation />
             </Box>
-          </CustomApolloProvider>
-        </UserProvider>
-      </AuthProvider>
+          </UserProvider>
+        </AuthProvider>
+      </CustomApolloProvider>
     </NativeBaseProvider>
   );
 }

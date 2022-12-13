@@ -1,14 +1,16 @@
-import { Text, Input, Flex, IFlexProps } from "native-base";
+import { Text, Input, Flex, IFlexProps, IInputProps } from "native-base";
 
 export type InputTextProps = {
   label: string;
   placeholder: string;
   emoji: string;
+  input: IInputProps;
 } & IFlexProps;
 export const InputText = ({
   label,
   placeholder,
   emoji,
+  input,
   ...props
 }: InputTextProps) => {
   return (
@@ -28,6 +30,7 @@ export const InputText = ({
         }
         placeholder={placeholder}
         backgroundColor="white"
+        {...input}
       />
     </Flex>
   );

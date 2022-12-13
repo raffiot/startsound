@@ -6,7 +6,7 @@ export default gql`
       id
       username
       birthplace
-      bitrhday
+      birthday
     }
   }
 `;

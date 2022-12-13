@@ -1,49 +1,60 @@
-import React, { useCallback, useState } from "react";
-import { Box, Center } from "native-base";
+import React, { useCallback, useContext, useState } from "react";
+import { Box, Center, Spinner } from "native-base";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Submit } from "@/components/Buttons/Submit";
 import { DatetimePicker } from "@/components/Input/DatetimePicker";
 import { InputText } from "@/components/Input/InputText";
 import { AuthStackParamList } from "@/navigation/types";
+import { UserContext } from "@/context/UserContext";
 
 type Props = NativeStackScreenProps<AuthStackParamList, "Birth">;
-export const BirthScreen = ({ navigation }: Props) => {
-  const [date, setDate] = useState(new Date(1598051730000));
-  const onDateChange = useCallback(
-    (date: Date) => {
-      setDate(date);
-    },
-    [setDate],
+export const BirthScreen = ({ route }: Props) => {
+  const { user, updateUser } = useContext(UserContext);
+  const [isLoading, setIsLoading] = useState(false);
+  const [birthCity, setBirthCity] = useState<string>(user?.birthplace || "");
+  const [birthDate, setBirthDate] = useState(
+    user?.birthday ? user.birthday : new Date(834056760000),
+  );
+  const [birthHour, setBirthHour] = useState(
+    user?.birthday ? user.birthday : new Date(834056760000),
   );
 
-  const [hour, setHour] = useState(new Date(1598051730000));
-  const onHourChange = useCallback(
-    (hour: Date) => {
-      setHour(hour);
-    },
-    [setDate],
-  );
-
-  // TODO: Define how to pass from auth stack to user stack
-  const onSubmit = useCallback(() => {}, []);
+  const onSubmit = useCallback(async () => {
+    if (user) {
+      setIsLoading(true);
+      await updateUser({
+        id: user.id,
+        username: route.params.username,
+        birthplace: birthCity,
+        birthday: new Date(
+          birthDate.getFullYear(),
+          birthDate.getMonth(),
+          birthDate.getDay(),
+          birthHour.getHours(),
+          birthHour.getMinutes(),
+        ),
+      });
+      setIsLoading(false);
+    }
+  }, [user, birthCity, birthDate]);
 
   return (
     <Box flex="1" my="16" display="flex" justifyContent="space-between">
       <Center my="auto">
         <Box w="70%">
           <DatetimePicker
-            value={date}
+            value={birthDate}
             mode="date"
-            onChange={onDateChange}
+            onChange={setBirthDate}
             label="Your birthday"
             emoji="🎂"
           />
         </Box>
         <Box w="70%" mt="16">
           <DatetimePicker
-            value={hour}
+            value={birthHour}
             mode="time"
-            onChange={onHourChange}
+            onChange={setBirthHour}
             label="Your birth hour"
             emoji="🕛"
           />
@@ -53,11 +64,19 @@ export const BirthScreen = ({ navigation }: Props) => {
             emoji="🌍"
             label="Your birth city"
             placeholder="Grenoble"
+            input={{
+              value: birthCity,
+              onChangeText: setBirthCity,
+            }}
           />
         </Box>
       </Center>
       <Center>
-        <Submit onPress={onSubmit} title="Submit" />
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <Submit onPress={onSubmit} title="Submit" disabled={!birthCity} />
+        )}
       </Center>
     </Box>
   );

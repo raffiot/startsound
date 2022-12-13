@@ -23,6 +23,16 @@ export type MeQuery = {
     id: any;
     username?: string | null;
     birthplace?: string | null;
-    bitrhday?: any | null;
+    birthday?: any | null;
   } | null;
+};
+
+export type UpdateUserMutationVariables = Types.Exact<{
+  id: Types.Scalars["UUID"];
+  input?: Types.InputMaybe<Types.UserUpdateInput>;
+}>;
+
+export type UpdateUserMutation = {
+  __typename?: "Mutation";
+  userUpdate?: { __typename?: "User"; id: any } | null;
 };

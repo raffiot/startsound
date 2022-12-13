@@ -3,7 +3,7 @@ import { Room } from "@/types/room";
 export type AuthStackParamList = {
   Welcome: undefined;
   Username: undefined;
-  Birth: undefined;
+  Birth: { username: string };
 };
 
 export type UserStackParamList = {

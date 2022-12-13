@@ -54,10 +54,10 @@ export type Query = {
 
 export type User = {
   __typename?: "User";
+  birthday?: Maybe<Scalars["DateTime"]>;
   birthplace?: Maybe<Scalars["String"]>;
   birthplace_pos_lat?: Maybe<Scalars["Float"]>;
   birthplace_pos_lon?: Maybe<Scalars["Float"]>;
-  bitrhday?: Maybe<Scalars["DateTime"]>;
   id: Scalars["UUID"];
   username?: Maybe<Scalars["String"]>;
 };
@@ -72,9 +72,9 @@ export type UserRefreshTokenInput = {
 };
 
 export type UserUpdateInput = {
+  birthday?: InputMaybe<Scalars["DateTime"]>;
   birthplace?: InputMaybe<Scalars["String"]>;
   birthplace_pos_lat?: InputMaybe<Scalars["Float"]>;
   birthplace_pos_lon?: InputMaybe<Scalars["Float"]>;
-  bitrhday?: InputMaybe<Scalars["DateTime"]>;
   username?: InputMaybe<Scalars["String"]>;
 };

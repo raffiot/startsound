@@ -41,6 +41,14 @@ export const useLogin = () => {
     },
   });
 
+  const [meQuery] = useMeLazyQuery({
+    onCompleted: (data) => {
+      if (data.me) {
+        setUser(data.me);
+      }
+    },
+  });
+
   useEffect(() => {
     if (response?.type === "success") {
       try {
@@ -53,13 +61,7 @@ export const useLogin = () => {
 
   useEffect(() => {
     if (auth?.accessToken) {
-      useMeLazyQuery({
-        onCompleted: (data) => {
-          if (data.me) {
-            setUser(data.me);
-          }
-        },
-      });
+      meQuery();
     }
   }, [auth]);
 

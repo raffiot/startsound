@@ -1,17 +1,22 @@
-import { AuthContext } from "@/context/AuthContext";
+import Constants from "expo-constants";
 import {
   ApolloClient,
   ApolloLink,
   createHttpLink,
-  FetchResult,
   InMemoryCache,
-  Observable,
+  fromPromise,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
-import Constants from "expo-constants";
-import { GraphQLError } from "graphql";
-import { useContext } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+let isRefreshing = false;
+let pendingRequests: any[] = [];
+
+const resolvePendingRequests = () => {
+  pendingRequests.map((callback) => callback());
+  pendingRequests = [];
+};
 
 const fetchRefreshToken = async (
   refreshToken: string,
@@ -40,68 +45,81 @@ const fetchRefreshToken = async (
   return { refreshToken: newRefreshToken, accessToken };
 };
 
+const errorLink = onError(
+  ({ graphQLErrors, networkError, operation, forward }) => {
+    if (graphQLErrors) {
+      for (let err of graphQLErrors) {
+        switch (err.extensions.code) {
+          case "UNAUTHENTICATED":
+            let forward$;
+
+            if (!isRefreshing) {
+              isRefreshing = true;
+              fromPromise(
+                AsyncStorage.getItem("auth")
+                  .then((authString) => {
+                    const authData = JSON.parse(authString ?? "{}") as {
+                      refreshToken: string;
+                    };
+                    return fetchRefreshToken(authData.refreshToken);
+                  })
+                  .then((data) => {
+                    return AsyncStorage.setItem("auth", JSON.stringify(data));
+                  })
+                  .then(() => {
+                    resolvePendingRequests();
+                  })
+                  .catch((error) => {
+                    pendingRequests = [];
+                    // Handle token refresh errors e.g clear stored tokens, redirect to login, ...
+                    return;
+                  })
+                  .finally(() => {
+                    isRefreshing = false;
+                  }),
+              );
+            } else {
+              forward$ = fromPromise<void>(
+                new Promise((resolve) => {
+                  pendingRequests.push(() => resolve());
+                }),
+              );
+            }
+
+            return forward$?.flatMap(() => forward(operation));
+        }
+      }
+    }
+    if (networkError) {
+      console.log(`[Network error]: ${networkError}`);
+      // if you would also like to retry automatically on
+      // network errors, we recommend that you use
+      // apollo-link-retry
+    }
+  },
+);
+
 const buildApolloLink = (): ApolloLink => {
-  const { auth, setAuth } = useContext(AuthContext);
-  const refreshToken = auth?.refreshToken;
-  const accessToken = auth?.accessToken;
   const httpLink = createHttpLink({
     uri: Constants.manifest?.extra?.graphqlApiUrl,
   });
-  const errorLink = onError(
-    ({ graphQLErrors, networkError, operation, forward }) => {
-      if (graphQLErrors) {
-        for (let err of graphQLErrors) {
-          switch (err.extensions.code) {
-            case "UNAUTHENTICATED":
-              // ignore 401 error for a refresh request
-              if (operation.operationName === "refreshToken" || !refreshToken)
-                return;
 
-              const observable = new Observable<
-                FetchResult<Record<string, any>>
-              >((observer) => {
-                // used an annonymous function for using an async function
-                (async () => {
-                  try {
-                    const token = await fetchRefreshToken(refreshToken);
-                    await setAuth(token);
-                    if (!accessToken) {
-                      throw new GraphQLError("Empty AccessToken");
-                    }
-
-                    // Retry the failed request
-                    const subscriber = {
-                      next: observer.next.bind(observer),
-                      error: observer.error.bind(observer),
-                      complete: observer.complete.bind(observer),
-                    };
-
-                    forward(operation).subscribe(subscriber);
-                  } catch (err) {
-                    observer.error(err);
-                  }
-                })();
-              });
-
-              return observable;
-          }
-        }
-      }
-
-      if (networkError) console.log(`[Network error]: ${networkError}`);
-    },
-  );
-
-  const authLink = setContext((_, { headers }) => {
+  const authLink = setContext(async (_, { headers }) => {
+    const authString = await AsyncStorage.getItem("auth");
+    const authData = JSON.parse(authString ?? "{}") as {
+      accessToken: string;
+    };
     return {
       headers: {
         ...headers,
-        authorization: accessToken ? `Bearer ${accessToken}` : "",
+        authorization: authData.accessToken
+          ? `Bearer ${authData.accessToken}`
+          : "",
       },
     };
   });
 
-  return ApolloLink.from([errorLink, authLink, httpLink]);
+  return ApolloLink.concat(errorLink, ApolloLink.concat(authLink, httpLink));
 };
 
 export const generateApolloClient = () =>
