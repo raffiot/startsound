@@ -20,12 +20,12 @@ export const RoomScreen = ({ navigation, route }: Props) => {
   const [sound, setSound] = useState<Audio.Sound>();
   const [songIsPlaying, setSoundIsPlaying] = useState(false);
   const [isMusicPlayerLoading, setIsMusicPlayerLoading] = useState(true);
-  const { name, compatibilityPercentage } = route.params.item;
+  const {
+    user: { username },
+    compatibilityScore,
+  } = route.params.item;
+  const colorShade = Math.floor(compatibilityScore / 10) * 100;
 
-  const colorShade = useMemo(
-    () => Math.floor(compatibilityPercentage / 10) * 100,
-    [compatibilityPercentage],
-  );
   const attributes = [
     "🔥 You share great positivity",
     "🕺 You are both higly energize",
@@ -82,7 +82,7 @@ export const RoomScreen = ({ navigation, route }: Props) => {
           </Text>
         </Pressable>
         <Heading lineHeight={64} fontFamily="heading" size="2xl">
-          {`With ${name}`}
+          {`With ${username}`}
         </Heading>
         {/* Second arrow transparent to have the text at middle */}
         <Flex>
@@ -104,7 +104,7 @@ export const RoomScreen = ({ navigation, route }: Props) => {
               fontFamily="heading"
               fontSize="4xl"
               color={`rose.${colorShade}`}
-            >{`${compatibilityPercentage}%`}</Text>
+            >{`${compatibilityScore}%`}</Text>
           </Box>
         </Center>
 

@@ -31,6 +31,7 @@ export type Mutation = {
   __typename?: "Mutation";
   login?: Maybe<LoginOutput>;
   refreshToken?: Maybe<LoginOutput>;
+  roomUpdate?: Maybe<Room>;
   userUpdate?: Maybe<User>;
 };
 
@@ -40,6 +41,11 @@ export type MutationLoginArgs = {
 
 export type MutationRefreshTokenArgs = {
   input?: InputMaybe<UserRefreshTokenInput>;
+};
+
+export type MutationRoomUpdateArgs = {
+  id: Scalars["UUID"];
+  input?: InputMaybe<RoomUpdate>;
 };
 
 export type MutationUserUpdateArgs = {
@@ -52,6 +58,19 @@ export type Query = {
   me?: Maybe<User>;
 };
 
+export type Room = {
+  __typename?: "Room";
+  compatibility_score: Scalars["Int"];
+  id: Scalars["UUID"];
+  is_favorite: Scalars["Boolean"];
+  song_id?: Maybe<Scalars["String"]>;
+  user: UserRestricted;
+};
+
+export type RoomUpdate = {
+  is_favorite?: InputMaybe<Scalars["Boolean"]>;
+};
+
 export type User = {
   __typename?: "User";
   birthday?: Maybe<Scalars["DateTime"]>;
@@ -59,6 +78,7 @@ export type User = {
   birthplace_pos_lat?: Maybe<Scalars["Float"]>;
   birthplace_pos_lon?: Maybe<Scalars["Float"]>;
   id: Scalars["UUID"];
+  rooms?: Maybe<Array<Room>>;
   username?: Maybe<Scalars["String"]>;
 };
 
@@ -69,6 +89,12 @@ export type UserLoginInput = {
 
 export type UserRefreshTokenInput = {
   refresh_token: Scalars["String"];
+};
+
+export type UserRestricted = {
+  __typename?: "UserRestricted";
+  id: Scalars["UUID"];
+  username?: Maybe<Scalars["String"]>;
 };
 
 export type UserUpdateInput = {

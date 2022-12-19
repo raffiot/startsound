@@ -1,4 +1,4 @@
-import { Room } from "@/types/room";
+import { Room } from "@/context/UserContext";
 
 export type AuthStackParamList = {
   Welcome: undefined;

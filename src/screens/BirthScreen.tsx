@@ -33,6 +33,7 @@ export const BirthScreen = ({ route }: Props) => {
           birthHour.getHours(),
           birthHour.getMinutes(),
         ),
+        rooms: [],
       });
       setIsLoading(false);
     }

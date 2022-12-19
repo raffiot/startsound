@@ -60,6 +60,16 @@ export const MeDocument = gql`
       username
       birthplace
       birthday
+      rooms {
+        id
+        song_id
+        compatibility_score
+        is_favorite
+        user {
+          id
+          username
+        }
+      }
     }
   }
 `;
@@ -105,6 +115,57 @@ export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<
   Types.MeQuery,
   Types.MeQueryVariables
+>;
+export const RoomFavoriteUpdateDocument = gql`
+  mutation RoomFavoriteUpdate($id: UUID!, $input: RoomUpdate) {
+    roomUpdate(id: $id, input: $input) {
+      id
+    }
+  }
+`;
+export type RoomFavoriteUpdateMutationFn = Apollo.MutationFunction<
+  Types.RoomFavoriteUpdateMutation,
+  Types.RoomFavoriteUpdateMutationVariables
+>;
+
+/**
+ * __useRoomFavoriteUpdateMutation__
+ *
+ * To run a mutation, you first call `useRoomFavoriteUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRoomFavoriteUpdateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [roomFavoriteUpdateMutation, { data, loading, error }] = useRoomFavoriteUpdateMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useRoomFavoriteUpdateMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    Types.RoomFavoriteUpdateMutation,
+    Types.RoomFavoriteUpdateMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    Types.RoomFavoriteUpdateMutation,
+    Types.RoomFavoriteUpdateMutationVariables
+  >(RoomFavoriteUpdateDocument, options);
+}
+export type RoomFavoriteUpdateMutationHookResult = ReturnType<
+  typeof useRoomFavoriteUpdateMutation
+>;
+export type RoomFavoriteUpdateMutationResult =
+  Apollo.MutationResult<Types.RoomFavoriteUpdateMutation>;
+export type RoomFavoriteUpdateMutationOptions = Apollo.BaseMutationOptions<
+  Types.RoomFavoriteUpdateMutation,
+  Types.RoomFavoriteUpdateMutationVariables
 >;
 export const UpdateUserDocument = gql`
   mutation UpdateUser($id: UUID!, $input: UserUpdateInput) {

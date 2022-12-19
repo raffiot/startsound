@@ -24,7 +24,29 @@ export type MeQuery = {
     username?: string | null;
     birthplace?: string | null;
     birthday?: any | null;
+    rooms?: Array<{
+      __typename?: "Room";
+      id: any;
+      song_id?: string | null;
+      compatibility_score: number;
+      is_favorite: boolean;
+      user: {
+        __typename?: "UserRestricted";
+        id: any;
+        username?: string | null;
+      };
+    }> | null;
   } | null;
+};
+
+export type RoomFavoriteUpdateMutationVariables = Types.Exact<{
+  id: Types.Scalars["UUID"];
+  input?: Types.InputMaybe<Types.RoomUpdate>;
+}>;
+
+export type RoomFavoriteUpdateMutation = {
+  __typename?: "Mutation";
+  roomUpdate?: { __typename?: "Room"; id: any } | null;
 };
 
 export type UpdateUserMutationVariables = Types.Exact<{

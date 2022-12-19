@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useState, useCallback } from "react";
+import React, { memo, useMemo, useState, useCallback, useContext } from "react";
 import { Share } from "react-native";
 import {
   Box,
@@ -11,32 +11,37 @@ import {
   FlatList,
 } from "native-base";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { UserStackParamList } from "src/navigation/types";
+import { UserStackParamList } from "@/navigation/types";
 import { RoomItem } from "@/components/RoomItem/RoomItem";
-import { Room } from "@/types/room";
-import { rooms as data } from "../data";
+import { UserContext, UserDetails } from "@/context/UserContext";
+import { useRoomFavoriteUpdateMutation } from "@/graphql/__generated__/hooks";
+
+type Room = UserDetails["rooms"][0];
 
 const ListRoomItem = ({
   item,
   onPressTitle,
+  onPressFavorite: onPressFavoriteProps,
 }: {
-  item: Room;
+  item: UserDetails["rooms"][0];
   onPressTitle: (item: Room) => void;
+  onPressFavorite: (id: string, isFavorite: boolean) => Promise<void>;
 }) => {
   const [isFavorite, setIsFavorite] = useState(item.isFavorite);
-  const onPressFavorite = useCallback(() => {
+  const onPressFavorite = useCallback(async () => {
+    await onPressFavoriteProps(item.id, !isFavorite);
     setIsFavorite(!isFavorite);
   }, [isFavorite]);
 
   const onShare = useCallback(async () => {
     try {
       await Share.share({
-        message: `Share my match photo with ${item.name}`,
+        message: `Share my match photo with ${item.user.username}`,
       });
     } catch (error: any) {
       alert(error.message);
     }
-  }, [item.name]);
+  }, [item.user.username]);
 
   const onPressTitleCb = useCallback(() => {
     return onPressTitle(item);
@@ -44,7 +49,7 @@ const ListRoomItem = ({
 
   return (
     <RoomItem
-      title={`With ${item.name}`}
+      title={`With ${item.user.username}`}
       isFavorite={isFavorite}
       onPressTitle={onPressTitleCb}
       onPressFavorite={onPressFavorite}
@@ -59,14 +64,21 @@ const MemoListRoomItem = memo(ListRoomItem);
 
 type Props = NativeStackScreenProps<UserStackParamList, "Home">;
 export const HomeScreen = ({ navigation }: Props) => {
-  const name = "Alexandre";
+  const { user } = useContext(UserContext);
+  const name = user?.username;
+  const rooms = user?.rooms ?? [];
   const link = "https://www.soundstar.com/invite/alexandre";
 
-  const dataSorted = useMemo(() => {
-    return data.sort((roomA, roomB) =>
-      roomA.isFavorite ? -1 : roomB.isFavorite ? 1 : 0,
-    );
-  }, [data]);
+  const [favoriteMutation] = useRoomFavoriteUpdateMutation();
+
+  const onPressFavorite = useCallback(
+    async (id: string, isFavorite: boolean) => {
+      await favoriteMutation({
+        variables: { id, input: { is_favorite: isFavorite } },
+      });
+    },
+    [favoriteMutation],
+  );
 
   const navigateRoom = useCallback(
     (item: Room) => {
@@ -120,12 +132,16 @@ export const HomeScreen = ({ navigation }: Props) => {
           <FlatList
             contentContainerStyle={{ paddingBottom: 128 }}
             mb={8}
-            data={dataSorted}
+            data={rooms}
             showsVerticalScrollIndicator={false}
-            renderItem={({ item }: { item: Room }) => {
+            renderItem={({ item }) => {
               return (
                 <Center>
-                  <MemoListRoomItem item={item} onPressTitle={navigateRoom} />
+                  <MemoListRoomItem
+                    item={item}
+                    onPressTitle={navigateRoom}
+                    onPressFavorite={onPressFavorite}
+                  />
                 </Center>
               );
             }}
