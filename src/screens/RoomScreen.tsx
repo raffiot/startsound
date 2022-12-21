@@ -14,17 +14,23 @@ import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { UserStackParamList } from "src/navigation/types";
 import { AdditionalContent } from "@/components/Buttons/AdditionalContent";
 import { MusicPreview } from "@/components/MusicPreview/MusicPreview";
+import { useRoomByIdQuery } from "@/graphql/__generated__/hooks";
 
 type Props = NativeStackScreenProps<UserStackParamList, "Room">;
 export const RoomScreen = ({ navigation, route }: Props) => {
   const [sound, setSound] = useState<Audio.Sound>();
   const [songIsPlaying, setSoundIsPlaying] = useState(false);
   const [isMusicPlayerLoading, setIsMusicPlayerLoading] = useState(true);
-  const {
-    user: { username },
-    compatibilityScore,
-  } = route.params.item;
-  const colorShade = Math.floor(compatibilityScore / 10) * 100;
+
+  const { data, loading } = useRoomByIdQuery({
+    variables: { id: route.params.id },
+  });
+  const room = data?.roomById ?? null;
+
+  const colorShade = useMemo(() => {
+    const value = Math.floor((room ? room.compatibility_score : 0) / 10) * 100;
+    return value;
+  }, [room]);
 
   const attributes = [
     "🔥 You share great positivity",
@@ -73,6 +79,10 @@ export const RoomScreen = ({ navigation, route }: Props) => {
       : undefined;
   }, [sound]);
 
+  if (loading || !room) {
+    return <Spinner />;
+  }
+
   return (
     <Box my="8" px="4">
       <Box flexDir="row" alignItems="center" justifyContent="space-between">
@@ -82,7 +92,7 @@ export const RoomScreen = ({ navigation, route }: Props) => {
           </Text>
         </Pressable>
         <Heading lineHeight={64} fontFamily="heading" size="2xl">
-          {`With ${username}`}
+          {`With ${room.user.username}`}
         </Heading>
         {/* Second arrow transparent to have the text at middle */}
         <Flex>
@@ -104,7 +114,7 @@ export const RoomScreen = ({ navigation, route }: Props) => {
               fontFamily="heading"
               fontSize="4xl"
               color={`rose.${colorShade}`}
-            >{`${compatibilityScore}%`}</Text>
+            >{`${room.compatibility_score}%`}</Text>
           </Box>
         </Center>
 
@@ -141,7 +151,6 @@ export const RoomScreen = ({ navigation, route }: Props) => {
             )}
           </Center>
         </Flex>
-        {/* <Text fontSize="3xl">YOOOOO</Text> */}
       </ScrollView>
     </Box>
   );

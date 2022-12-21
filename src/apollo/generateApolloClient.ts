@@ -23,6 +23,9 @@ const fetchRefreshToken = async (
 ): Promise<{ refreshToken: string; accessToken: string }> => {
   const response = await fetch(Constants.manifest?.extra?.graphqlApiUrl, {
     method: "post",
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({
       query: `
       mutation RefreshToken($input: UserRefreshTokenInput){
@@ -39,9 +42,15 @@ const fetchRefreshToken = async (
       },
     }),
   });
+  const responseData = await response.json();
   const {
-    refreshToken: { refresh_token: newRefreshToken, access_token: accessToken },
-  } = await response.json();
+    data: {
+      refreshToken: {
+        refresh_token: newRefreshToken,
+        access_token: accessToken,
+      },
+    },
+  } = responseData;
   return { refreshToken: newRefreshToken, accessToken };
 };
 

@@ -56,6 +56,11 @@ export type MutationUserUpdateArgs = {
 export type Query = {
   __typename?: "Query";
   me?: Maybe<User>;
+  roomById?: Maybe<Room>;
+};
+
+export type QueryRoomByIdArgs = {
+  id: Scalars["UUID"];
 };
 
 export type Room = {

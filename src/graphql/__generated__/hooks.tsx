@@ -62,8 +62,6 @@ export const MeDocument = gql`
       birthday
       rooms {
         id
-        song_id
-        compatibility_score
         is_favorite
         user {
           id
@@ -115,6 +113,68 @@ export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<
   Types.MeQuery,
   Types.MeQueryVariables
+>;
+export const RoomByIdDocument = gql`
+  query RoomById($id: UUID!) {
+    roomById(id: $id) {
+      id
+      compatibility_score
+      is_favorite
+      user {
+        id
+        username
+      }
+    }
+  }
+`;
+
+/**
+ * __useRoomByIdQuery__
+ *
+ * To run a query within a React component, call `useRoomByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRoomByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRoomByIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useRoomByIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    Types.RoomByIdQuery,
+    Types.RoomByIdQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<Types.RoomByIdQuery, Types.RoomByIdQueryVariables>(
+    RoomByIdDocument,
+    options
+  );
+}
+export function useRoomByIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    Types.RoomByIdQuery,
+    Types.RoomByIdQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<Types.RoomByIdQuery, Types.RoomByIdQueryVariables>(
+    RoomByIdDocument,
+    options
+  );
+}
+export type RoomByIdQueryHookResult = ReturnType<typeof useRoomByIdQuery>;
+export type RoomByIdLazyQueryHookResult = ReturnType<
+  typeof useRoomByIdLazyQuery
+>;
+export type RoomByIdQueryResult = Apollo.QueryResult<
+  Types.RoomByIdQuery,
+  Types.RoomByIdQueryVariables
 >;
 export const RoomFavoriteUpdateDocument = gql`
   mutation RoomFavoriteUpdate($id: UUID!, $input: RoomUpdate) {

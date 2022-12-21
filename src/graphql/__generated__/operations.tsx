@@ -27,8 +27,6 @@ export type MeQuery = {
     rooms?: Array<{
       __typename?: "Room";
       id: any;
-      song_id?: string | null;
-      compatibility_score: number;
       is_favorite: boolean;
       user: {
         __typename?: "UserRestricted";
@@ -36,6 +34,21 @@ export type MeQuery = {
         username?: string | null;
       };
     }> | null;
+  } | null;
+};
+
+export type RoomByIdQueryVariables = Types.Exact<{
+  id: Types.Scalars["UUID"];
+}>;
+
+export type RoomByIdQuery = {
+  __typename?: "Query";
+  roomById?: {
+    __typename?: "Room";
+    id: any;
+    compatibility_score: number;
+    is_favorite: boolean;
+    user: { __typename?: "UserRestricted"; id: any; username?: string | null };
   } | null;
 };
 

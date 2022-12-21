@@ -1,10 +1,12 @@
-import { createContext, useState } from "react";
-import { useUpdateUserMutation } from "@/graphql/__generated__/hooks";
-import { User } from "@/graphql/__generated__/schemas";
+import { createContext, useEffect, useState } from "react";
+import {
+  useMeQuery,
+  useUpdateUserMutation,
+} from "@/graphql/__generated__/hooks";
+import { MeQuery } from "@/graphql/__generated__/operations";
 
 export type Room = {
   id: string;
-  compatibilityScore: number;
   isFavorite: boolean;
   user: {
     id: string;
@@ -23,7 +25,7 @@ export type UserDetails = {
 export interface UserContextProps {
   user: UserDetails | null;
   isProfileComplete: boolean;
-  setUser: (user: User) => Promise<void>;
+  setUser: (user: MeQuery["me"]) => Promise<void>;
   updateUser: (user: UserDetails) => Promise<void>;
 }
 
@@ -38,12 +40,12 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUserState] = useState<UserDetails | null>(null);
   const [updateUserMutation] = useUpdateUserMutation();
 
-  const setUser = async (user: User) => {
+  const setUser = async (user: MeQuery["me"]) => {
+    if (!user) return;
     setUserState({
       ...user,
       rooms: (user.rooms ?? []).map((room) => ({
         ...room,
-        compatibilityScore: room.compatibility_score,
         isFavorite: room.is_favorite,
         user: {
           ...room.user,
@@ -66,6 +68,8 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
     });
     setUserState(user);
   };
+
+  useMeQuery({ onCompleted: (data) => setUser(data.me) });
 
   return (
     <UserContext.Provider

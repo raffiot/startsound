@@ -1,4 +1,4 @@
-import { Room } from "@/context/UserContext";
+import { NavigatorScreenParams } from "@react-navigation/native";
 
 export type AuthStackParamList = {
   Welcome: undefined;
@@ -8,5 +8,10 @@ export type AuthStackParamList = {
 
 export type UserStackParamList = {
   Home: undefined;
-  Room: { item: Room };
+  Room: { id: string };
+};
+
+export type MainStackParamList = {
+  AuthStack: NavigatorScreenParams<AuthStackParamList>;
+  UserStack: NavigatorScreenParams<UserStackParamList>;
 };

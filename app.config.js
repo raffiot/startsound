@@ -29,7 +29,7 @@ export default {
     web: {
       favicon: "./assets/favicon.png",
     },
-    scheme: "startsound",
+    scheme: process.env.DEEPLINK_URL_PREFIX,
     extra: {
       firebaseApiKey: process.env.FIREBASE_API_KEY,
       firebaseAuthDomain: process.env.FIREBASE_AUTH_DOMAIN,
@@ -41,6 +41,7 @@ export default {
       firebaseRegion: process.env.FIREBASE_REGION,
       spotifyClientId: process.env.SPOTIFY_CLIENT_ID,
       graphqlApiUrl: process.env.GRAPHQL_API_URL,
+      deeplinkUrlPrefix: process.env.DEEPLINK_URL_PREFIX,
     },
   },
 };

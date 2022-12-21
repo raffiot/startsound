@@ -9,8 +9,6 @@ export default gql`
       birthday
       rooms {
         id
-        song_id
-        compatibility_score
         is_favorite
         user {
           id

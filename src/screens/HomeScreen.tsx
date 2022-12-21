@@ -23,8 +23,8 @@ const ListRoomItem = ({
   onPressTitle,
   onPressFavorite: onPressFavoriteProps,
 }: {
-  item: UserDetails["rooms"][0];
-  onPressTitle: (item: Room) => void;
+  item: Room;
+  onPressTitle: (id: string) => void;
   onPressFavorite: (id: string, isFavorite: boolean) => Promise<void>;
 }) => {
   const [isFavorite, setIsFavorite] = useState(item.isFavorite);
@@ -44,7 +44,7 @@ const ListRoomItem = ({
   }, [item.user.username]);
 
   const onPressTitleCb = useCallback(() => {
-    return onPressTitle(item);
+    return onPressTitle(item.id);
   }, [item]);
 
   return (
@@ -81,8 +81,8 @@ export const HomeScreen = ({ navigation }: Props) => {
   );
 
   const navigateRoom = useCallback(
-    (item: Room) => {
-      return navigation.navigate("Room", { item });
+    (id: string) => {
+      return navigation.navigate("Room", { id });
     },
     [navigation],
   );
