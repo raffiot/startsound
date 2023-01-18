@@ -31,6 +31,7 @@ export type Mutation = {
   __typename?: "Mutation";
   login?: Maybe<LoginOutput>;
   refreshToken?: Maybe<LoginOutput>;
+  roomCreate?: Maybe<Room>;
   roomUpdate?: Maybe<Room>;
   userUpdate?: Maybe<User>;
 };
@@ -41,6 +42,10 @@ export type MutationLoginArgs = {
 
 export type MutationRefreshTokenArgs = {
   input?: InputMaybe<UserRefreshTokenInput>;
+};
+
+export type MutationRoomCreateArgs = {
+  user_id: Scalars["UUID"];
 };
 
 export type MutationRoomUpdateArgs = {
@@ -57,10 +62,15 @@ export type Query = {
   __typename?: "Query";
   me?: Maybe<User>;
   roomById?: Maybe<Room>;
+  roomByUserId?: Maybe<Room>;
 };
 
 export type QueryRoomByIdArgs = {
   id: Scalars["UUID"];
+};
+
+export type QueryRoomByUserIdArgs = {
+  user_id: Scalars["UUID"];
 };
 
 export type Room = {

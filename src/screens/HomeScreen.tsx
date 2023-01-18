@@ -1,5 +1,6 @@
-import React, { memo, useMemo, useState, useCallback, useContext } from "react";
+import React, { memo, useState, useCallback, useContext } from "react";
 import { Share } from "react-native";
+import * as Linking from "expo-linking";
 import {
   Box,
   Heading,
@@ -9,14 +10,20 @@ import {
   ArrowForwardIcon,
   Flex,
   FlatList,
+  Spinner,
 } from "native-base";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { UserStackParamList } from "@/navigation/types";
 import { RoomItem } from "@/components/RoomItem/RoomItem";
-import { UserContext, UserDetails } from "@/context/UserContext";
-import { useRoomFavoriteUpdateMutation } from "@/graphql/__generated__/hooks";
+import { UserContext } from "@/context/UserContext";
+import {
+  useMeQuery,
+  useRoomFavoriteUpdateMutation,
+} from "@/graphql/__generated__/hooks";
+import { MeQuery } from "@/graphql/__generated__/operations";
+import { useRoomRedirection } from "@/hooks/useRoomRedirection";
 
-type Room = UserDetails["rooms"][0];
+type Room = NonNullable<NonNullable<MeQuery["me"]>["rooms"]>[number];
 
 const ListRoomItem = ({
   item,
@@ -27,7 +34,7 @@ const ListRoomItem = ({
   onPressTitle: (id: string) => void;
   onPressFavorite: (id: string, isFavorite: boolean) => Promise<void>;
 }) => {
-  const [isFavorite, setIsFavorite] = useState(item.isFavorite);
+  const [isFavorite, setIsFavorite] = useState(item.is_favorite);
   const onPressFavorite = useCallback(async () => {
     await onPressFavoriteProps(item.id, !isFavorite);
     setIsFavorite(!isFavorite);
@@ -64,10 +71,21 @@ const MemoListRoomItem = memo(ListRoomItem);
 
 type Props = NativeStackScreenProps<UserStackParamList, "Home">;
 export const HomeScreen = ({ navigation }: Props) => {
+  // Deeplink for room redirection/creation
+  const url = Linking.useURL();
+  const { roomRedirection } = useRoomRedirection(navigation);
+  const { queryParams } = (
+    url ? Linking.parse(url) : { queryParams: null }
+  ) as { queryParams: { user_id: string } | null };
+  roomRedirection(queryParams);
+
   const { user } = useContext(UserContext);
-  const name = user?.username;
-  const rooms = user?.rooms ?? [];
-  const link = "https://www.soundstar.com/invite/alexandre";
+  const redirectUri = Linking.createURL("main/home", {
+    queryParams: { user_id: user?.id },
+  });
+  const { data, loading } = useMeQuery({
+    fetchPolicy: "network-only",
+  });
 
   const [favoriteMutation] = useRoomFavoriteUpdateMutation();
 
@@ -90,18 +108,18 @@ export const HomeScreen = ({ navigation }: Props) => {
   const onShareLink = useCallback(async () => {
     try {
       await Share.share({
-        message: link,
+        message: redirectUri,
       });
     } catch (error: any) {
       alert(error.message);
     }
-  }, [link]);
+  }, [redirectUri]);
 
   return (
     <Box my="8" flex="1">
       <Center>
         <Heading lineHeight={64} fontFamily="heading" size="xl">
-          {`✨ Welcome ${name} ✨`}
+          {`✨ Welcome ${user?.username || ""} ✨`}
         </Heading>
       </Center>
       <Box flex="1" my="auto" mt="8">
@@ -119,7 +137,7 @@ export const HomeScreen = ({ navigation }: Props) => {
               <Flex flexDir="row" alignItems="center">
                 <Box width="90%">
                   <Text color="gray.400" fontSize="2xl" isTruncated>
-                    {link}
+                    {redirectUri}
                   </Text>
                 </Box>
                 <ArrowForwardIcon ml="2" />
@@ -129,23 +147,29 @@ export const HomeScreen = ({ navigation }: Props) => {
         </Box>
         <Box p="2" mt="8">
           <Text fontSize="3xl">My rooms history</Text>
-          <FlatList
-            contentContainerStyle={{ paddingBottom: 128 }}
-            mb={8}
-            data={rooms}
-            showsVerticalScrollIndicator={false}
-            renderItem={({ item }) => {
-              return (
-                <Center>
-                  <MemoListRoomItem
-                    item={item}
-                    onPressTitle={navigateRoom}
-                    onPressFavorite={onPressFavorite}
-                  />
-                </Center>
-              );
-            }}
-          />
+          {!loading ? (
+            <FlatList
+              contentContainerStyle={{ paddingBottom: 128 }}
+              mb={8}
+              data={data?.me?.rooms}
+              showsVerticalScrollIndicator={false}
+              renderItem={({ item }) => {
+                return (
+                  <Center>
+                    <MemoListRoomItem
+                      item={item}
+                      onPressTitle={navigateRoom}
+                      onPressFavorite={onPressFavorite}
+                    />
+                  </Center>
+                );
+              }}
+            />
+          ) : (
+            <Center>
+              <Spinner />
+            </Center>
+          )}
         </Box>
       </Box>
     </Box>

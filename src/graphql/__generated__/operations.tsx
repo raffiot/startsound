@@ -52,6 +52,24 @@ export type RoomByIdQuery = {
   } | null;
 };
 
+export type RoomByUserIdQueryVariables = Types.Exact<{
+  user_id: Types.Scalars["UUID"];
+}>;
+
+export type RoomByUserIdQuery = {
+  __typename?: "Query";
+  roomByUserId?: { __typename?: "Room"; id: any } | null;
+};
+
+export type RoomCreateMutationVariables = Types.Exact<{
+  user_id: Types.Scalars["UUID"];
+}>;
+
+export type RoomCreateMutation = {
+  __typename?: "Mutation";
+  roomCreate?: { __typename?: "Room"; id: any } | null;
+};
+
 export type RoomFavoriteUpdateMutationVariables = Types.Exact<{
   id: Types.Scalars["UUID"];
   input?: Types.InputMaybe<Types.RoomUpdate>;

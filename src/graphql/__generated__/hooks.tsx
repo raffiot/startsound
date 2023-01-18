@@ -176,6 +176,114 @@ export type RoomByIdQueryResult = Apollo.QueryResult<
   Types.RoomByIdQuery,
   Types.RoomByIdQueryVariables
 >;
+export const RoomByUserIdDocument = gql`
+  query RoomByUserId($user_id: UUID!) {
+    roomByUserId(user_id: $user_id) {
+      id
+    }
+  }
+`;
+
+/**
+ * __useRoomByUserIdQuery__
+ *
+ * To run a query within a React component, call `useRoomByUserIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRoomByUserIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRoomByUserIdQuery({
+ *   variables: {
+ *      user_id: // value for 'user_id'
+ *   },
+ * });
+ */
+export function useRoomByUserIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    Types.RoomByUserIdQuery,
+    Types.RoomByUserIdQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    Types.RoomByUserIdQuery,
+    Types.RoomByUserIdQueryVariables
+  >(RoomByUserIdDocument, options);
+}
+export function useRoomByUserIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    Types.RoomByUserIdQuery,
+    Types.RoomByUserIdQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    Types.RoomByUserIdQuery,
+    Types.RoomByUserIdQueryVariables
+  >(RoomByUserIdDocument, options);
+}
+export type RoomByUserIdQueryHookResult = ReturnType<
+  typeof useRoomByUserIdQuery
+>;
+export type RoomByUserIdLazyQueryHookResult = ReturnType<
+  typeof useRoomByUserIdLazyQuery
+>;
+export type RoomByUserIdQueryResult = Apollo.QueryResult<
+  Types.RoomByUserIdQuery,
+  Types.RoomByUserIdQueryVariables
+>;
+export const RoomCreateDocument = gql`
+  mutation roomCreate($user_id: UUID!) {
+    roomCreate(user_id: $user_id) {
+      id
+    }
+  }
+`;
+export type RoomCreateMutationFn = Apollo.MutationFunction<
+  Types.RoomCreateMutation,
+  Types.RoomCreateMutationVariables
+>;
+
+/**
+ * __useRoomCreateMutation__
+ *
+ * To run a mutation, you first call `useRoomCreateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRoomCreateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [roomCreateMutation, { data, loading, error }] = useRoomCreateMutation({
+ *   variables: {
+ *      user_id: // value for 'user_id'
+ *   },
+ * });
+ */
+export function useRoomCreateMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    Types.RoomCreateMutation,
+    Types.RoomCreateMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    Types.RoomCreateMutation,
+    Types.RoomCreateMutationVariables
+  >(RoomCreateDocument, options);
+}
+export type RoomCreateMutationHookResult = ReturnType<
+  typeof useRoomCreateMutation
+>;
+export type RoomCreateMutationResult =
+  Apollo.MutationResult<Types.RoomCreateMutation>;
+export type RoomCreateMutationOptions = Apollo.BaseMutationOptions<
+  Types.RoomCreateMutation,
+  Types.RoomCreateMutationVariables
+>;
 export const RoomFavoriteUpdateDocument = gql`
   mutation RoomFavoriteUpdate($id: UUID!, $input: RoomUpdate) {
     roomUpdate(id: $id, input: $input) {

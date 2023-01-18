@@ -1,4 +1,3 @@
-import Constants from "expo-constants";
 import * as Linking from "expo-linking";
 import { LinkingOptions } from "@react-navigation/native";
 import { MainStackParamList } from "@/navigation/types";
