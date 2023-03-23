@@ -10,16 +10,20 @@ export const SpotifyLogin = ({
 }: SocialLoginProps) => {
   return (
     <Pressable
+      display="flex"
       flexDir="row"
-      bg="spotify.400"
+      justifyContent="center"
+      py={2}
+      px={8}
       alignItems="center"
-      p="4"
-      borderRadius="full"
+      borderWidth={2}
+      borderRadius={32}
       onPress={onPress}
+      width="80%"
       {...props}
     >
       <Image
-        source={require("../../../../assets/button-icons/spotify.png")}
+        source={require("../../../../assets/button-icons/Spotify_Icon_CMYK_Black.png")}
         alt="spotify_logo"
         size="xs"
       />
@@ -29,3 +33,20 @@ export const SpotifyLogin = ({
     </Pressable>
   );
 };
+
+/*
+    <Pressable
+      px="4"
+      borderRadius="full"
+      borderWidth="1"
+      onPress={onPress}
+      {...props}
+    >
+      <Image
+        source={require("../../../../assets/button-icons/Spotify_Logo_RGB_White.png")}
+        alt="spotify_logo"
+        size="xl"
+        resizeMode="contain"
+      />
+    </Pressable>
+*/

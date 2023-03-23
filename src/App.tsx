@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect } from "react";
+import { ImageBackground } from "react-native";
 import { NativeBaseProvider, Box } from "native-base";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
@@ -10,6 +11,8 @@ import { UserProvider } from "@/context/UserContext";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
+    "Unbounded-Medium": require("../assets/fonts/Unbounded-Medium.ttf"),
+    "Unbounded-Bold": require("../assets/fonts/Unbounded-Bold.ttf"),
     "Pacifico-Regular": require("../assets/fonts/Pacifico-Regular.ttf"),
     "Caveat-Medium": require("../assets/fonts/Caveat-Medium.ttf"),
   });
@@ -36,21 +39,19 @@ export default function App() {
       <CustomApolloProvider>
         <AuthProvider>
           <UserProvider>
-            <Box
-              bg={{
-                linearGradient: {
-                  colors: ["lightBlue.300", "violet.800"],
-                  start: [0, 0],
-                  end: [1, 1],
-                },
-              }}
-              width="100%"
-              height="100%"
-              safeArea
-              onLayout={onLayoutRootView}
+            <ImageBackground
+              style={{ flex: 1 }}
+              source={require("../assets/background.png")}
             >
-              <RootNavigation />
-            </Box>
+              <Box
+                width="100%"
+                height="100%"
+                safeArea
+                onLayout={onLayoutRootView}
+              >
+                <RootNavigation />
+              </Box>
+            </ImageBackground>
           </UserProvider>
         </AuthProvider>
       </CustomApolloProvider>
