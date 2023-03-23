@@ -6,14 +6,17 @@ export type SubmitProps = {
 export const Submit = ({ onPress, title, ...props }: SubmitProps) => {
   return (
     <Pressable
-      bg="black"
       onPress={onPress}
       px="4"
       py="2"
       rounded="lg"
+      borderWidth={2}
+      borderRadius="3xl"
+      borderColor="aqua"
+      alignItems="center"
       {...props}
     >
-      <Text color="white" fontSize="2xl">
+      <Text color="aqua" fontSize="2xl" fontWeight="500">
         {title}
       </Text>
     </Pressable>

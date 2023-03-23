@@ -5,7 +5,7 @@ import { AdditionalContent } from "@/components/Buttons/AdditionalContent";
 import { SpotifyPlay } from "@/components/Buttons/SpotifyPlay";
 
 storiesOf("Button", module)
-  .add("Spotify", () => <SpotifyLogin title="Connect with spotify" />)
+  .add("Spotify", () => <SpotifyLogin title="LOG IN" />)
   .add("Submit", () => <Submit title="Submit" />)
   .add("Additional Content", () => (
     <AdditionalContent title="🔓 Unlock more attributes" />

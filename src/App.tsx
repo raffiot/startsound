@@ -11,6 +11,7 @@ import { UserProvider } from "@/context/UserContext";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
+    "Unbounded-Regular": require("../assets/fonts/Unbounded-Regular.ttf"),
     "Unbounded-Medium": require("../assets/fonts/Unbounded-Medium.ttf"),
     "Unbounded-Bold": require("../assets/fonts/Unbounded-Bold.ttf"),
     "Pacifico-Regular": require("../assets/fonts/Pacifico-Regular.ttf"),

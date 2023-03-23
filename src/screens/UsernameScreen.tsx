@@ -5,6 +5,7 @@ import { InputText } from "@/components/Input/InputText";
 import { Submit } from "@/components/Buttons/Submit";
 import { AuthStackParamList } from "@/navigation/types";
 import { UserContext } from "@/context/UserContext";
+import { Progress } from "@/components/Progress";
 
 type Props = NativeStackScreenProps<AuthStackParamList, "Username">;
 export const UsernameScreen = ({ navigation }: Props) => {
@@ -18,23 +19,25 @@ export const UsernameScreen = ({ navigation }: Props) => {
   }, [username, navigation]);
 
   return (
-    <Box flex="1" my="16" display="flex" justifyContent="space-between">
-      <Center my="auto">
-        <Box w="70%">
-          <InputText
-            label="Your Username"
-            emoji="👤"
-            placeholder="Alexandre"
-            input={{
-              value: username,
-              onChangeText: setUsername,
-            }}
-          />
-        </Box>
-      </Center>
-      <Center>
-        <Submit onPress={onSubmit} title="Next >" disabled={!username} />
-      </Center>
+    <Box mt="8" width="70%" flex="1" mx="auto">
+      <Progress value={20} />
+      <InputText
+        mt="16"
+        label="WHAT'S YOUR NAME?"
+        placeholder="Alexandre"
+        input={{
+          value: username,
+          onChangeText: setUsername,
+        }}
+      />
+      <Box mt="auto">
+        <Submit
+          onPress={onSubmit}
+          title="NEXT"
+          width="100%"
+          disabled={!username}
+        />
+      </Box>
     </Box>
   );
 };

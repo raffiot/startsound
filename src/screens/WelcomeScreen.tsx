@@ -14,9 +14,10 @@ export const WelcomeScreen = ({ navigation }: Props) => {
   const { login } = useLogin();
 
   const connectSpotify = useCallback(async () => {
-    setLoading(true);
-    await login();
-    setLoading(false);
+    // setLoading(true);
+    // await login();
+    // setLoading(false);
+    navigation.navigate("Username");
   }, [login]);
 
   useEffect(() => {
@@ -26,7 +27,7 @@ export const WelcomeScreen = ({ navigation }: Props) => {
   }, [user]);
 
   return (
-    <Box flex="1" my="16" px="4" display="flex" justifyContent="space-between">
+    <Box flex="1" mt="16" px="4" display="flex" justifyContent="space-between">
       <Center>
         <Image
           source={require("../../assets/logo.png")}
@@ -43,7 +44,7 @@ export const WelcomeScreen = ({ navigation }: Props) => {
       {loading ? (
         <Spinner />
       ) : (
-        <Center>
+        <Center mt="32">
           <SpotifyLogin title="LOG IN" onPress={connectSpotify} />
         </Center>
       )}

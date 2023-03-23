@@ -2,7 +2,9 @@ import { extendTheme } from "native-base";
 
 const newTheme = {
   colors: {
+    lightRose: "#FFE9FE",
     aqua: "#3952E2",
+    lightGray: "#4C494F",
     spotify: {
       400: "#1DB954",
     },
@@ -10,6 +12,9 @@ const newTheme = {
   fontConfig: {
     Unbounded: {
       400: {
+        normal: "Unbounded-Regular",
+      },
+      500: {
         normal: "Unbounded-Medium",
       },
       700: {

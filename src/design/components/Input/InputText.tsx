@@ -3,33 +3,30 @@ import { Text, Input, Flex, IFlexProps, IInputProps } from "native-base";
 export type InputTextProps = {
   label: string;
   placeholder: string;
-  emoji: string;
   input: IInputProps;
 } & IFlexProps;
 export const InputText = ({
   label,
   placeholder,
-  emoji,
   input,
   ...props
 }: InputTextProps) => {
   return (
     <Flex {...props}>
-      <Text pb="2" fontSize="2xl">
+      <Text pb="2" fontSize="2xl" fontWeight="bold">
         {label}
       </Text>
       <Input
-        p="2"
+        borderWidth={0}
+        px="4"
+        py="6"
         size="2xl"
         fontSize="2xl"
-        rounded="lg"
-        InputLeftElement={
-          <Text mx="2" fontSize="2xl">
-            {emoji}
-          </Text>
-        }
+        fontWeight="regular"
+        rounded="2xl"
         placeholder={placeholder}
-        backgroundColor="white"
+        placeholderTextColor="lightGray"
+        backgroundColor="lightRose"
         {...input}
       />
     </Flex>

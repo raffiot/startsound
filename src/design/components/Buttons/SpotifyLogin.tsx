@@ -17,7 +17,7 @@ export const SpotifyLogin = ({
       px={8}
       alignItems="center"
       borderWidth={2}
-      borderRadius={32}
+      borderRadius="3xl"
       onPress={onPress}
       width="80%"
       {...props}
@@ -27,7 +27,7 @@ export const SpotifyLogin = ({
         alt="spotify_logo"
         size="xs"
       />
-      <Text ml="4" fontSize="2xl">
+      <Text ml="4" fontSize="2xl" fontWeight="medium">
         {title}
       </Text>
     </Pressable>
