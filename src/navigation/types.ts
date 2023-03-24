@@ -3,7 +3,9 @@ import { NavigatorScreenParams } from "@react-navigation/native";
 export type AuthStackParamList = {
   Welcome: undefined;
   Username: undefined;
-  Birth: { username: string };
+  BirthDate: { username: string };
+  BirthHour: { username: string; birthday: string };
+  BirthPlace: { username: string; birthday: string };
 };
 
 export type UserStackParamList = {

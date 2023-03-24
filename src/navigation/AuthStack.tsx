@@ -3,9 +3,10 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { WelcomeScreen } from "@/screens/WelcomeScreen";
 import { UsernameScreen } from "@/screens/UsernameScreen";
-import { BirthScreen } from "@/screens/BirthScreen";
+import { BirthDateScreen } from "@/screens/BirthDateScreen";
+import { BirthHourScreen } from "@/screens/BirthHourScreen";
+import { BirthPlaceScreen } from "@/screens/BirthPlaceScreen";
 import { AuthStackParamList } from "./types";
-import Theme from "./theme";
 
 export const AuthStack = () => {
   const Stack = createNativeStackNavigator<AuthStackParamList>();
@@ -17,7 +18,9 @@ export const AuthStack = () => {
     >
       <Stack.Screen name="Welcome" component={WelcomeScreen} />
       <Stack.Screen name="Username" component={UsernameScreen} />
-      <Stack.Screen name="Birth" component={BirthScreen} />
+      <Stack.Screen name="BirthDate" component={BirthDateScreen} />
+      <Stack.Screen name="BirthHour" component={BirthHourScreen} />
+      <Stack.Screen name="BirthPlace" component={BirthPlaceScreen} />
     </Stack.Navigator>
   );
 };

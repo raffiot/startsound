@@ -14,10 +14,9 @@ export const WelcomeScreen = ({ navigation }: Props) => {
   const { login } = useLogin();
 
   const connectSpotify = useCallback(async () => {
-    // setLoading(true);
-    // await login();
-    // setLoading(false);
-    navigation.navigate("Username");
+    setLoading(true);
+    await login();
+    setLoading(false);
   }, [login]);
 
   useEffect(() => {
@@ -27,7 +26,7 @@ export const WelcomeScreen = ({ navigation }: Props) => {
   }, [user]);
 
   return (
-    <Box flex="1" mt="16" px="4" display="flex" justifyContent="space-between">
+    <Box flex="1" my="12" p="4" display="flex" justifyContent="space-between">
       <Center>
         <Image
           source={require("../../assets/logo.png")}

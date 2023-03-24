@@ -4,7 +4,7 @@ const newTheme = {
   colors: {
     lightRose: "#FFE9FE",
     aqua: "#3952E2",
-    lightGray: "#4C494F",
+    lightGray: "#7d7882",
     spotify: {
       400: "#1DB954",
     },
@@ -25,15 +25,6 @@ const newTheme = {
       400: {
         normal: "Caveat-Medium",
       },
-      // 500: {
-      //   normal: "Caveat-Regular",
-      // },
-      // 600: {
-      //   normal: "Caveat-SemiBold",
-      // },
-      // 700: {
-      //   normal: "Caveat-Bold",
-      // },
     },
     Pacifico: {
       700: {

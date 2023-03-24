@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useState } from "react";
-import { Box, Center } from "native-base";
+import { Box } from "native-base";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { InputText } from "@/components/Input/InputText";
 import { Submit } from "@/components/Buttons/Submit";
@@ -14,12 +14,12 @@ export const UsernameScreen = ({ navigation }: Props) => {
 
   const onSubmit = useCallback(async () => {
     if (username) {
-      return navigation.navigate("Birth", { username });
+      return navigation.navigate("BirthDate", { username });
     }
   }, [username, navigation]);
 
   return (
-    <Box mt="8" width="70%" flex="1" mx="auto">
+    <Box my="12" width="70%" flex="1" mx="auto">
       <Progress value={20} />
       <InputText
         mt="16"
