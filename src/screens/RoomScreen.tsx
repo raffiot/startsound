@@ -84,7 +84,7 @@ export const RoomScreen = ({ navigation, route }: Props) => {
   }
 
   return (
-    <Box my="8" px="4">
+    <Box my="8" px="4" safeArea>
       <Box flexDir="row" alignItems="center" justifyContent="space-between">
         <Pressable onPress={goBack}>
           <Text fontFamily="heading" fontSize="2xl">

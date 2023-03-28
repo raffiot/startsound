@@ -5,6 +5,7 @@ import { Submit } from "@/components/Buttons/Submit";
 import { AuthStackParamList } from "@/navigation/types";
 import { DatePicker } from "@/components/Input/DatePicker";
 import { Progress } from "@/components/Progress";
+import { SafeAreaLayout } from "@/components/Layouts/SafeAreaLayout";
 
 type Props = NativeStackScreenProps<AuthStackParamList, "BirthDate">;
 export const BirthDateScreen = ({ route, navigation }: Props) => {
@@ -18,18 +19,20 @@ export const BirthDateScreen = ({ route, navigation }: Props) => {
   }, [birthDate, navigation]);
 
   return (
-    <Box my="12" width="70%" flex="1" mx="auto">
-      <Progress value={40} />
-      <DatePicker
-        flex="1"
-        mt="16"
-        value={birthDate}
-        onChange={setBirthDate}
-        label="WHEN WERE YOU BORN ?"
-      />
-      <Box mt="auto">
-        <Submit onPress={onSubmit} title="NEXT" width="100%" />
+    <SafeAreaLayout>
+      <Box my="12" width="70%" flex="1" mx="auto">
+        <Progress value={40} />
+        <DatePicker
+          flex="1"
+          mt="16"
+          value={birthDate}
+          onChange={setBirthDate}
+          label="WHEN WERE YOU BORN ?"
+        />
+        <Box mt="auto">
+          <Submit onPress={onSubmit} title="NEXT" width="100%" />
+        </Box>
       </Box>
-    </Box>
+    </SafeAreaLayout>
   );
 };

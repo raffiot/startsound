@@ -5,6 +5,7 @@ import { AuthStackParamList } from "@/navigation/types";
 import { Progress } from "@/components/Progress";
 import { Submit } from "@/components/Buttons/Submit";
 import { TimePicker } from "@/components/Input/TimePicker";
+import { SafeAreaLayout } from "@/components/Layouts/SafeAreaLayout";
 
 type Props = NativeStackScreenProps<AuthStackParamList, "BirthHour">;
 export const BirthHourScreen = ({ route, navigation }: Props) => {
@@ -20,17 +21,19 @@ export const BirthHourScreen = ({ route, navigation }: Props) => {
   }, [birthHour, navigation]);
 
   return (
-    <Box my="12" width="70%" flex="1" mx="auto">
-      <Progress value={60} />
-      <TimePicker
-        mt="16"
-        value={birthHour}
-        onChange={setBirthHour}
-        label="AT WHAT TIME?"
-      />
-      <Box mt="auto">
-        <Submit onPress={onSubmit} title="NEXT" width="100%" />
+    <SafeAreaLayout>
+      <Box my="12" width="70%" flex="1" mx="auto">
+        <Progress value={60} />
+        <TimePicker
+          mt="16"
+          value={birthHour}
+          onChange={setBirthHour}
+          label="AT WHAT TIME?"
+        />
+        <Box mt="auto">
+          <Submit onPress={onSubmit} title="NEXT" width="100%" />
+        </Box>
       </Box>
-    </Box>
+    </SafeAreaLayout>
   );
 };

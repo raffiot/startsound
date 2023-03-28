@@ -8,6 +8,7 @@ import { UserStack } from "./UserStack";
 import { AuthStack } from "./AuthStack";
 import { MainStackParamList } from "./types";
 import Theme from "./theme";
+import { Box } from "native-base";
 
 const SCREEN_OPTIONS = {
   headerShown: false,
@@ -22,7 +23,7 @@ export default function RootNavigation() {
       fallback={<ActivityIndicator />}
     >
       <MainStack.Navigator screenOptions={SCREEN_OPTIONS}>
-        {!user && !isProfileComplete ? (
+        {!user || !isProfileComplete ? (
           <MainStack.Screen name="AuthStack" component={AuthStack} />
         ) : null}
         <MainStack.Screen name="UserStack" component={UserStack} />

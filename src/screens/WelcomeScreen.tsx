@@ -6,6 +6,7 @@ import { AuthStackParamList } from "@/navigation/types";
 import { useLogin } from "@/hooks/useLogin";
 import { useEffect } from "react";
 import { UserContext } from "@/context/UserContext";
+import { SafeAreaLayout } from "@/components/Layouts/SafeAreaLayout";
 
 type Props = NativeStackScreenProps<AuthStackParamList, "Welcome">;
 export const WelcomeScreen = ({ navigation }: Props) => {
@@ -26,27 +27,29 @@ export const WelcomeScreen = ({ navigation }: Props) => {
   }, [user]);
 
   return (
-    <Box flex="1" my="12" p="4" display="flex" justifyContent="space-between">
-      <Center>
-        <Image
-          source={require("../../assets/logo.png")}
-          size="2xl"
-          alt="Logo"
-          resizeMode="contain"
-        />
-      </Center>
-      <Center>
-        <Heading fontFamily="heading" size="xl">
-          MUSIC & ASTRO COMPATIBILITY
-        </Heading>
-      </Center>
-      {loading ? (
-        <Spinner />
-      ) : (
-        <Center mt="32">
-          <SpotifyLogin title="LOG IN" onPress={connectSpotify} />
+    <SafeAreaLayout>
+      <Box flex="1" my="12" p="4" display="flex" justifyContent="space-between">
+        <Center>
+          <Image
+            source={require("../../assets/logo.png")}
+            size="2xl"
+            alt="Logo"
+            resizeMode="contain"
+          />
         </Center>
-      )}
-    </Box>
+        <Center>
+          <Heading fontFamily="heading" size="xl">
+            MUSIC & ASTRO COMPATIBILITY
+          </Heading>
+        </Center>
+        {loading ? (
+          <Spinner />
+        ) : (
+          <Center mt="32">
+            <SpotifyLogin title="LOG IN" onPress={connectSpotify} />
+          </Center>
+        )}
+      </Box>
+    </SafeAreaLayout>
   );
 };

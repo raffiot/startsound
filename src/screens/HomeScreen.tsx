@@ -7,7 +7,6 @@ import {
   Center,
   Pressable,
   Text,
-  ArrowForwardIcon,
   Flex,
   FlatList,
   Spinner,
@@ -22,6 +21,8 @@ import {
 } from "@/graphql/__generated__/hooks";
 import { MeQuery } from "@/graphql/__generated__/operations";
 import { useRoomRedirection } from "@/hooks/useRoomRedirection";
+import { Share as SharePressable } from "@/components/Pressables/Share";
+import { FreemiumLayout } from "@/components/Layouts/FreemiumLayout";
 
 type Room = NonNullable<NonNullable<MeQuery["me"]>["rooms"]>[number];
 
@@ -62,7 +63,6 @@ const ListRoomItem = ({
       onPressFavorite={onPressFavorite}
       onPressShare={onShare}
       mt="4"
-      w="90%"
     />
   );
 };
@@ -116,62 +116,75 @@ export const HomeScreen = ({ navigation }: Props) => {
   }, [redirectUri]);
 
   return (
-    <Box my="8" flex="1">
-      <Center>
-        <Heading lineHeight={64} fontFamily="heading" size="xl">
-          {`✨ Welcome ${user?.username || ""} ✨`}
-        </Heading>
-      </Center>
-      <Box flex="1" my="auto" mt="8">
-        <Box p="2">
-          <Text fontSize="3xl">Invite AstroFriends </Text>
-          <Center>
-            <Pressable
-              bg="white"
-              w="70%"
-              p="2"
-              rounded="lg"
-              mt="4"
-              onPress={onShareLink}
+    <FreemiumLayout title="UNLOCK MORE CONTENT" onPress={() => {}}>
+      <Box my="12" width="90%" flex="1" mx="auto">
+        <Center>
+          <Heading size="xl" textAlign="center">
+            WELCOME!
+          </Heading>
+          <Heading fontFamily="heading" size="xl" textAlign="center">
+            {user?.username || ""}
+          </Heading>
+        </Center>
+        <Box flex="1" my="auto" mt="8">
+          <Heading size="xl" textAlign="center">
+            INVITE ASTROFRIENDS
+          </Heading>
+          <Pressable
+            backgroundColor="lightRose"
+            rounded="2xl"
+            borderWidth={0}
+            px="4"
+            py="6"
+            mt="4"
+            onPress={onShareLink}
+          >
+            <Flex
+              flexDir="row"
+              alignItems="center"
+              justifyContent="space-between"
             >
-              <Flex flexDir="row" alignItems="center">
-                <Box width="90%">
-                  <Text color="gray.400" fontSize="2xl" isTruncated>
-                    {redirectUri}
-                  </Text>
-                </Box>
-                <ArrowForwardIcon ml="2" />
-              </Flex>
-            </Pressable>
-          </Center>
-        </Box>
-        <Box p="2" mt="8">
-          <Text fontSize="3xl">My rooms history</Text>
-          {!loading ? (
-            <FlatList
-              contentContainerStyle={{ paddingBottom: 128 }}
-              mb={8}
-              data={data?.me?.rooms}
-              showsVerticalScrollIndicator={false}
-              renderItem={({ item }) => {
-                return (
-                  <Center>
-                    <MemoListRoomItem
-                      item={item}
-                      onPressTitle={navigateRoom}
-                      onPressFavorite={onPressFavorite}
-                    />
-                  </Center>
-                );
-              }}
-            />
-          ) : (
-            <Center>
-              <Spinner />
-            </Center>
+              <Box>
+                <Text color="lightGray" fontSize="xl" isTruncated>
+                  Share my profile
+                </Text>
+              </Box>
+              <SharePressable />
+            </Flex>
+          </Pressable>
+          {!loading && data?.me?.rooms?.length === 0 ? null : (
+            <Box p="2" mt="8">
+              <Heading fontFamily="heading" size="xl" textAlign="center">
+                MY ROOMS HISTORY
+              </Heading>
+              {!loading ? (
+                <FlatList
+                  height="100%"
+                  mt="8"
+                  bg="lightRose"
+                  borderRadius={32}
+                  contentContainerStyle={{ paddingBottom: 128 }}
+                  data={data?.me?.rooms}
+                  showsVerticalScrollIndicator={false}
+                  renderItem={({ item }) => {
+                    return (
+                      <MemoListRoomItem
+                        item={item}
+                        onPressTitle={navigateRoom}
+                        onPressFavorite={onPressFavorite}
+                      />
+                    );
+                  }}
+                />
+              ) : (
+                <Center mt="8">
+                  <Spinner />
+                </Center>
+              )}
+            </Box>
           )}
         </Box>
       </Box>
-    </Box>
+    </FreemiumLayout>
   );
 };

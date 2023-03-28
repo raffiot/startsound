@@ -1,11 +1,6 @@
-import {
-  FavouriteIcon,
-  Pressable,
-  Text,
-  Flex,
-  ArrowForwardIcon,
-  IFlexProps,
-} from "native-base";
+import { Pressable, Text, Flex, IFlexProps } from "native-base";
+import { Share } from "../Pressables/Share";
+import { Favorite } from "../Pressables/Favorite";
 
 export type SubmitProps = {
   title: string;
@@ -24,38 +19,20 @@ export const RoomItem = ({
 }: SubmitProps) => {
   return (
     <Flex
-      bg="white"
-      px="4"
-      py="2"
-      rounded="2xl"
-      borderColor="gray.400"
-      borderWidth="2"
+      width="80%"
+      mx="auto"
       flexDir="row"
       alignItems="center"
-      justifyContent="space-between"
+      pt="2"
       {...props}
     >
-      <Flex pl="2" flexDir="row">
-        <Pressable
-          onPress={onPressFavorite}
-          rounded="full"
-          borderColor="gray.400"
-          borderWidth="1"
-          justifyContent="center"
-          alignItems="center"
-          p="4"
-        >
-          <FavouriteIcon color={isFavorite ? "red.400" : "gray.400"} />
-        </Pressable>
-        <Pressable onPress={onPressTitle} pl="8" py="2">
-          <Text color="black" fontSize="2xl">
-            {title}
-          </Text>
-        </Pressable>
-      </Flex>
-      <Pressable onPress={onPressShare}>
-        <ArrowForwardIcon />
+      <Favorite isFavorite={isFavorite} onPress={onPressFavorite} />
+      <Pressable onPress={onPressTitle} pl="4">
+        <Text fontWeight={700} color="#4C494F" fontSize="2xl">
+          {title}
+        </Text>
       </Pressable>
+      <Share onPress={onPressShare} ml="auto" />
     </Flex>
   );
 };

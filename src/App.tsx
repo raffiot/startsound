@@ -43,15 +43,9 @@ export default function App() {
             <ImageBackground
               style={{ flex: 1 }}
               source={require("../assets/background.png")}
+              onLayout={onLayoutRootView}
             >
-              <Box
-                width="100%"
-                height="100%"
-                safeArea
-                onLayout={onLayoutRootView}
-              >
-                <RootNavigation />
-              </Box>
+              <RootNavigation />
             </ImageBackground>
           </UserProvider>
         </AuthProvider>

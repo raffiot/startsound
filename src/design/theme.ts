@@ -3,6 +3,7 @@ import { extendTheme } from "native-base";
 const newTheme = {
   colors: {
     lightRose: "#FFE9FE",
+    love: "#ED99FF",
     aqua: "#3952E2",
     lightGray: "#7d7882",
     spotify: {
@@ -33,7 +34,7 @@ const newTheme = {
     },
   },
   fonts: {
-    body: "Unbounded",
+    body: "Unbounded-Bold",
     heading: "Unbounded",
   },
 };

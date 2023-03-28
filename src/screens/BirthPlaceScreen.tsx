@@ -6,6 +6,7 @@ import { UserContext } from "@/context/UserContext";
 import { InputText } from "@/components/Input/InputText";
 import { Submit } from "@/components/Buttons/Submit";
 import { Progress } from "@/components/Progress";
+import { SafeAreaLayout } from "@/components/Layouts/SafeAreaLayout";
 
 type Props = NativeStackScreenProps<AuthStackParamList, "BirthPlace">;
 export const BirthPlaceScreen = ({ route, navigation }: Props) => {
@@ -28,24 +29,26 @@ export const BirthPlaceScreen = ({ route, navigation }: Props) => {
   }, [user, birthPlace]);
 
   return (
-    <Box my="12" width="70%" flex="1" mx="auto">
-      <Progress value={80} />
-      <InputText
-        mt="16"
-        label="AND IN WHICH CITY?"
-        placeholder="Roubaix"
-        input={{
-          value: birthPlace,
-          onChangeText: setBirthPlace,
-        }}
-      />
-      <Box mt="auto">
-        {isLoading ? (
-          <Spinner />
-        ) : (
-          <Submit onPress={onSubmit} title="DONE!" width="100%" />
-        )}
+    <SafeAreaLayout>
+      <Box my="12" width="70%" flex="1" mx="auto">
+        <Progress value={80} />
+        <InputText
+          mt="16"
+          label="AND IN WHICH CITY?"
+          placeholder="Roubaix"
+          input={{
+            value: birthPlace,
+            onChangeText: setBirthPlace,
+          }}
+        />
+        <Box mt="auto">
+          {isLoading ? (
+            <Spinner />
+          ) : (
+            <Submit onPress={onSubmit} title="DONE!" width="100%" />
+          )}
+        </Box>
       </Box>
-    </Box>
+    </SafeAreaLayout>
   );
 };
