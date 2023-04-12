@@ -32,12 +32,6 @@ export const RoomScreen = ({ navigation, route }: Props) => {
     return value;
   }, [room]);
 
-  const attributes = [
-    "🔥 You share great positivity",
-    "🕺 You are both higly energize",
-    "🙉 You have both a strong introspection",
-  ];
-
   const goBack = useCallback(async () => {
     if (sound) {
       const status = await sound.getStatusAsync();
@@ -63,13 +57,15 @@ export const RoomScreen = ({ navigation, route }: Props) => {
   useEffect(() => {
     const loadAudio = async () => {
       const { sound } = await Audio.Sound.createAsync({
-        uri: "https://p.scdn.co/mp3-preview/95a5bddd5c989e229caf575ef420cc45a0f2fc21?cid=774b29d4f13844c495f206cafdad9c86",
+        uri: room?.songs?.[0]?.preview_url || "",
       });
       setSound(sound);
       setIsMusicPlayerLoading(false);
     };
-    loadAudio();
-  }, []);
+    if (room?.songs?.[0]?.preview_url) {
+      loadAudio();
+    }
+  }, [room?.songs]);
 
   useEffect(() => {
     return sound
@@ -82,6 +78,8 @@ export const RoomScreen = ({ navigation, route }: Props) => {
   if (loading || !room) {
     return <Spinner />;
   }
+
+  const song = room.songs?.[0];
 
   return (
     <Box my="8" px="4" safeArea>
@@ -123,7 +121,7 @@ export const RoomScreen = ({ navigation, route }: Props) => {
           <Heading fontFamily="heading" fontSize="2xl" lineHeight={64}>
             Your Compatibility:
           </Heading>
-          {attributes.map((item, i) => (
+          {(room.features || []).map((item, i) => (
             <Text fontSize="2xl" p="2" key={`attribute-${i}`}>
               {item}
             </Text>
@@ -143,8 +141,9 @@ export const RoomScreen = ({ navigation, route }: Props) => {
               <Spinner size="lg" />
             ) : (
               <MusicPreview
-                artist="Alicia Keys"
-                title="If I Ain't Got You"
+                image={song?.picture_url || ""}
+                artist={song?.artist || ""}
+                title={song?.name || "Song ?"}
                 onPress={playSound}
                 isPlaying={songIsPlaying}
               />

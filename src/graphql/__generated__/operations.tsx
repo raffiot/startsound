@@ -48,6 +48,16 @@ export type RoomByIdQuery = {
     id: any;
     compatibility_score: number;
     is_favorite: boolean;
+    features?: Array<string | null> | null;
+    songs?: Array<{
+      __typename?: "Song";
+      id: string;
+      room_id: any;
+      name?: string | null;
+      picture_url?: string | null;
+      preview_url?: string | null;
+      artist?: string | null;
+    } | null> | null;
     user: { __typename?: "UserRestricted"; id: any; username?: string | null };
   } | null;
 };

@@ -76,14 +76,25 @@ export type QueryRoomByUserIdArgs = {
 export type Room = {
   __typename?: "Room";
   compatibility_score: Scalars["Int"];
+  features?: Maybe<Array<Maybe<Scalars["String"]>>>;
   id: Scalars["UUID"];
   is_favorite: Scalars["Boolean"];
-  song_id?: Maybe<Scalars["String"]>;
+  songs?: Maybe<Array<Maybe<Song>>>;
   user: UserRestricted;
 };
 
 export type RoomUpdate = {
   is_favorite?: InputMaybe<Scalars["Boolean"]>;
+};
+
+export type Song = {
+  __typename?: "Song";
+  artist?: Maybe<Scalars["String"]>;
+  id: Scalars["String"];
+  name?: Maybe<Scalars["String"]>;
+  picture_url?: Maybe<Scalars["String"]>;
+  preview_url?: Maybe<Scalars["String"]>;
+  room_id: Scalars["UUID"];
 };
 
 export type User = {

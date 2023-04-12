@@ -4,12 +4,14 @@ import { SpotifyPlay } from "../Buttons/SpotifyPlay";
 export type MusicPreviewProps = {
   title: string;
   artist: string;
+  image: string;
   isPlaying: boolean;
   onPress: () => void;
 };
 export const MusicPreview = ({
   title,
   artist,
+  image,
   isPlaying,
   onPress,
 }: MusicPreviewProps) => {
@@ -18,7 +20,7 @@ export const MusicPreview = ({
       <Box>
         <Image
           source={{
-            uri: "https://upload.wikimedia.org/wikipedia/en/e/e6/The_Diary_Of_Alicia_Keys_album_cover.jpg",
+            uri: image,
           }}
           alt="music_cover"
           width={128}

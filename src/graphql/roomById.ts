@@ -6,6 +6,15 @@ export default gql`
       id
       compatibility_score
       is_favorite
+      features
+      songs {
+        id
+        room_id
+        name
+        picture_url
+        preview_url
+        artist
+      }
       user {
         id
         username
