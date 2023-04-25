@@ -97,6 +97,11 @@ export type Song = {
   room_id: Scalars["UUID"];
 };
 
+export type Subscription = {
+  __typename?: "Subscription";
+  roomCreated?: Maybe<Room>;
+};
+
 export type User = {
   __typename?: "User";
   birthday?: Maybe<Scalars["DateTime"]>;

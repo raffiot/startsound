@@ -1,5 +1,6 @@
 import React, { memo, useState, useCallback, useContext } from "react";
 import { Share } from "react-native";
+import uniqBy from "lodash.uniqby";
 import * as Linking from "expo-linking";
 import {
   Box,
@@ -16,10 +17,14 @@ import { UserStackParamList } from "@/navigation/types";
 import { RoomItem } from "@/components/RoomItem/RoomItem";
 import { UserContext } from "@/context/UserContext";
 import {
+  RoomCreatedDocument,
   useMeQuery,
   useRoomFavoriteUpdateMutation,
 } from "@/graphql/__generated__/hooks";
-import { MeQuery } from "@/graphql/__generated__/operations";
+import {
+  MeQuery,
+  RoomCreatedSubscription,
+} from "@/graphql/__generated__/operations";
 import { useRoomRedirection } from "@/hooks/useRoomRedirection";
 import { Share as SharePressable } from "@/components/Pressables/Share";
 import { FreemiumLayout } from "@/components/Layouts/FreemiumLayout";
@@ -83,8 +88,28 @@ export const HomeScreen = ({ navigation }: Props) => {
   const redirectUri = Linking.createURL("main/home", {
     queryParams: { user_id: user?.id },
   });
-  const { data, loading } = useMeQuery({
+
+  const { data, loading, subscribeToMore } = useMeQuery({
     fetchPolicy: "network-only",
+  });
+
+  subscribeToMore<RoomCreatedSubscription>({
+    document: RoomCreatedDocument,
+    updateQuery: (prev, { subscriptionData }) => {
+      if (!subscriptionData.data) return prev;
+      return Object.assign({}, prev, {
+        me: {
+          ...prev.me,
+          rooms: uniqBy(
+            [
+              subscriptionData.data.roomCreated,
+              ...(prev.me?.rooms ? prev.me?.rooms : []),
+            ],
+            "id",
+          ),
+        },
+      });
+    },
   });
 
   const [favoriteMutation] = useRoomFavoriteUpdateMutation();

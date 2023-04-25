@@ -53,6 +53,158 @@ export type LoginMutationOptions = Apollo.BaseMutationOptions<
   Types.LoginMutation,
   Types.LoginMutationVariables
 >;
+export const RoomCreateDocument = gql`
+  mutation roomCreate($user_id: UUID!) {
+    roomCreate(user_id: $user_id) {
+      id
+    }
+  }
+`;
+export type RoomCreateMutationFn = Apollo.MutationFunction<
+  Types.RoomCreateMutation,
+  Types.RoomCreateMutationVariables
+>;
+
+/**
+ * __useRoomCreateMutation__
+ *
+ * To run a mutation, you first call `useRoomCreateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRoomCreateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [roomCreateMutation, { data, loading, error }] = useRoomCreateMutation({
+ *   variables: {
+ *      user_id: // value for 'user_id'
+ *   },
+ * });
+ */
+export function useRoomCreateMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    Types.RoomCreateMutation,
+    Types.RoomCreateMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    Types.RoomCreateMutation,
+    Types.RoomCreateMutationVariables
+  >(RoomCreateDocument, options);
+}
+export type RoomCreateMutationHookResult = ReturnType<
+  typeof useRoomCreateMutation
+>;
+export type RoomCreateMutationResult =
+  Apollo.MutationResult<Types.RoomCreateMutation>;
+export type RoomCreateMutationOptions = Apollo.BaseMutationOptions<
+  Types.RoomCreateMutation,
+  Types.RoomCreateMutationVariables
+>;
+export const RoomFavoriteUpdateDocument = gql`
+  mutation RoomFavoriteUpdate($id: UUID!, $input: RoomUpdate) {
+    roomUpdate(id: $id, input: $input) {
+      id
+    }
+  }
+`;
+export type RoomFavoriteUpdateMutationFn = Apollo.MutationFunction<
+  Types.RoomFavoriteUpdateMutation,
+  Types.RoomFavoriteUpdateMutationVariables
+>;
+
+/**
+ * __useRoomFavoriteUpdateMutation__
+ *
+ * To run a mutation, you first call `useRoomFavoriteUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRoomFavoriteUpdateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [roomFavoriteUpdateMutation, { data, loading, error }] = useRoomFavoriteUpdateMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useRoomFavoriteUpdateMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    Types.RoomFavoriteUpdateMutation,
+    Types.RoomFavoriteUpdateMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    Types.RoomFavoriteUpdateMutation,
+    Types.RoomFavoriteUpdateMutationVariables
+  >(RoomFavoriteUpdateDocument, options);
+}
+export type RoomFavoriteUpdateMutationHookResult = ReturnType<
+  typeof useRoomFavoriteUpdateMutation
+>;
+export type RoomFavoriteUpdateMutationResult =
+  Apollo.MutationResult<Types.RoomFavoriteUpdateMutation>;
+export type RoomFavoriteUpdateMutationOptions = Apollo.BaseMutationOptions<
+  Types.RoomFavoriteUpdateMutation,
+  Types.RoomFavoriteUpdateMutationVariables
+>;
+export const UpdateUserDocument = gql`
+  mutation UpdateUser($id: UUID!, $input: UserUpdateInput) {
+    userUpdate(id: $id, input: $input) {
+      id
+    }
+  }
+`;
+export type UpdateUserMutationFn = Apollo.MutationFunction<
+  Types.UpdateUserMutation,
+  Types.UpdateUserMutationVariables
+>;
+
+/**
+ * __useUpdateUserMutation__
+ *
+ * To run a mutation, you first call `useUpdateUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateUserMutation, { data, loading, error }] = useUpdateUserMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateUserMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    Types.UpdateUserMutation,
+    Types.UpdateUserMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    Types.UpdateUserMutation,
+    Types.UpdateUserMutationVariables
+  >(UpdateUserDocument, options);
+}
+export type UpdateUserMutationHookResult = ReturnType<
+  typeof useUpdateUserMutation
+>;
+export type UpdateUserMutationResult =
+  Apollo.MutationResult<Types.UpdateUserMutation>;
+export type UpdateUserMutationOptions = Apollo.BaseMutationOptions<
+  Types.UpdateUserMutation,
+  Types.UpdateUserMutationVariables
+>;
 export const MeDocument = gql`
   query Me {
     me {
@@ -243,155 +395,48 @@ export type RoomByUserIdQueryResult = Apollo.QueryResult<
   Types.RoomByUserIdQuery,
   Types.RoomByUserIdQueryVariables
 >;
-export const RoomCreateDocument = gql`
-  mutation roomCreate($user_id: UUID!) {
-    roomCreate(user_id: $user_id) {
+export const RoomCreatedDocument = gql`
+  subscription roomCreated {
+    roomCreated {
       id
+      is_favorite
+      user {
+        id
+        username
+      }
     }
   }
 `;
-export type RoomCreateMutationFn = Apollo.MutationFunction<
-  Types.RoomCreateMutation,
-  Types.RoomCreateMutationVariables
->;
 
 /**
- * __useRoomCreateMutation__
+ * __useRoomCreatedSubscription__
  *
- * To run a mutation, you first call `useRoomCreateMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useRoomCreateMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
+ * To run a query within a React component, call `useRoomCreatedSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useRoomCreatedSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
  *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const [roomCreateMutation, { data, loading, error }] = useRoomCreateMutation({
+ * const { data, loading, error } = useRoomCreatedSubscription({
  *   variables: {
- *      user_id: // value for 'user_id'
  *   },
  * });
  */
-export function useRoomCreateMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    Types.RoomCreateMutation,
-    Types.RoomCreateMutationVariables
+export function useRoomCreatedSubscription(
+  baseOptions?: Apollo.SubscriptionHookOptions<
+    Types.RoomCreatedSubscription,
+    Types.RoomCreatedSubscriptionVariables
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    Types.RoomCreateMutation,
-    Types.RoomCreateMutationVariables
-  >(RoomCreateDocument, options);
+  return Apollo.useSubscription<
+    Types.RoomCreatedSubscription,
+    Types.RoomCreatedSubscriptionVariables
+  >(RoomCreatedDocument, options);
 }
-export type RoomCreateMutationHookResult = ReturnType<
-  typeof useRoomCreateMutation
+export type RoomCreatedSubscriptionHookResult = ReturnType<
+  typeof useRoomCreatedSubscription
 >;
-export type RoomCreateMutationResult =
-  Apollo.MutationResult<Types.RoomCreateMutation>;
-export type RoomCreateMutationOptions = Apollo.BaseMutationOptions<
-  Types.RoomCreateMutation,
-  Types.RoomCreateMutationVariables
->;
-export const RoomFavoriteUpdateDocument = gql`
-  mutation RoomFavoriteUpdate($id: UUID!, $input: RoomUpdate) {
-    roomUpdate(id: $id, input: $input) {
-      id
-    }
-  }
-`;
-export type RoomFavoriteUpdateMutationFn = Apollo.MutationFunction<
-  Types.RoomFavoriteUpdateMutation,
-  Types.RoomFavoriteUpdateMutationVariables
->;
-
-/**
- * __useRoomFavoriteUpdateMutation__
- *
- * To run a mutation, you first call `useRoomFavoriteUpdateMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useRoomFavoriteUpdateMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [roomFavoriteUpdateMutation, { data, loading, error }] = useRoomFavoriteUpdateMutation({
- *   variables: {
- *      id: // value for 'id'
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useRoomFavoriteUpdateMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    Types.RoomFavoriteUpdateMutation,
-    Types.RoomFavoriteUpdateMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    Types.RoomFavoriteUpdateMutation,
-    Types.RoomFavoriteUpdateMutationVariables
-  >(RoomFavoriteUpdateDocument, options);
-}
-export type RoomFavoriteUpdateMutationHookResult = ReturnType<
-  typeof useRoomFavoriteUpdateMutation
->;
-export type RoomFavoriteUpdateMutationResult =
-  Apollo.MutationResult<Types.RoomFavoriteUpdateMutation>;
-export type RoomFavoriteUpdateMutationOptions = Apollo.BaseMutationOptions<
-  Types.RoomFavoriteUpdateMutation,
-  Types.RoomFavoriteUpdateMutationVariables
->;
-export const UpdateUserDocument = gql`
-  mutation UpdateUser($id: UUID!, $input: UserUpdateInput) {
-    userUpdate(id: $id, input: $input) {
-      id
-    }
-  }
-`;
-export type UpdateUserMutationFn = Apollo.MutationFunction<
-  Types.UpdateUserMutation,
-  Types.UpdateUserMutationVariables
->;
-
-/**
- * __useUpdateUserMutation__
- *
- * To run a mutation, you first call `useUpdateUserMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateUserMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [updateUserMutation, { data, loading, error }] = useUpdateUserMutation({
- *   variables: {
- *      id: // value for 'id'
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useUpdateUserMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    Types.UpdateUserMutation,
-    Types.UpdateUserMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    Types.UpdateUserMutation,
-    Types.UpdateUserMutationVariables
-  >(UpdateUserDocument, options);
-}
-export type UpdateUserMutationHookResult = ReturnType<
-  typeof useUpdateUserMutation
->;
-export type UpdateUserMutationResult =
-  Apollo.MutationResult<Types.UpdateUserMutation>;
-export type UpdateUserMutationOptions = Apollo.BaseMutationOptions<
-  Types.UpdateUserMutation,
-  Types.UpdateUserMutationVariables
->;
+export type RoomCreatedSubscriptionResult =
+  Apollo.SubscriptionResult<Types.RoomCreatedSubscription>;

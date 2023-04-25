@@ -14,6 +14,35 @@ export type LoginMutation = {
   } | null;
 };
 
+export type RoomCreateMutationVariables = Types.Exact<{
+  user_id: Types.Scalars["UUID"];
+}>;
+
+export type RoomCreateMutation = {
+  __typename?: "Mutation";
+  roomCreate?: { __typename?: "Room"; id: any } | null;
+};
+
+export type RoomFavoriteUpdateMutationVariables = Types.Exact<{
+  id: Types.Scalars["UUID"];
+  input?: Types.InputMaybe<Types.RoomUpdate>;
+}>;
+
+export type RoomFavoriteUpdateMutation = {
+  __typename?: "Mutation";
+  roomUpdate?: { __typename?: "Room"; id: any } | null;
+};
+
+export type UpdateUserMutationVariables = Types.Exact<{
+  id: Types.Scalars["UUID"];
+  input?: Types.InputMaybe<Types.UserUpdateInput>;
+}>;
+
+export type UpdateUserMutation = {
+  __typename?: "Mutation";
+  userUpdate?: { __typename?: "User"; id: any } | null;
+};
+
 export type MeQueryVariables = Types.Exact<{ [key: string]: never }>;
 
 export type MeQuery = {
@@ -71,31 +100,16 @@ export type RoomByUserIdQuery = {
   roomByUserId?: { __typename?: "Room"; id: any } | null;
 };
 
-export type RoomCreateMutationVariables = Types.Exact<{
-  user_id: Types.Scalars["UUID"];
+export type RoomCreatedSubscriptionVariables = Types.Exact<{
+  [key: string]: never;
 }>;
 
-export type RoomCreateMutation = {
-  __typename?: "Mutation";
-  roomCreate?: { __typename?: "Room"; id: any } | null;
-};
-
-export type RoomFavoriteUpdateMutationVariables = Types.Exact<{
-  id: Types.Scalars["UUID"];
-  input?: Types.InputMaybe<Types.RoomUpdate>;
-}>;
-
-export type RoomFavoriteUpdateMutation = {
-  __typename?: "Mutation";
-  roomUpdate?: { __typename?: "Room"; id: any } | null;
-};
-
-export type UpdateUserMutationVariables = Types.Exact<{
-  id: Types.Scalars["UUID"];
-  input?: Types.InputMaybe<Types.UserUpdateInput>;
-}>;
-
-export type UpdateUserMutation = {
-  __typename?: "Mutation";
-  userUpdate?: { __typename?: "User"; id: any } | null;
+export type RoomCreatedSubscription = {
+  __typename?: "Subscription";
+  roomCreated?: {
+    __typename?: "Room";
+    id: any;
+    is_favorite: boolean;
+    user: { __typename?: "UserRestricted"; id: any; username?: string | null };
+  } | null;
 };

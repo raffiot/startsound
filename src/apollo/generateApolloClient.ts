@@ -1,14 +1,18 @@
 import Constants from "expo-constants";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   ApolloClient,
   ApolloLink,
   createHttpLink,
   InMemoryCache,
   fromPromise,
+  split,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
+import { createClient } from "graphql-ws";
+import { getMainDefinition } from "@apollo/client/utilities";
 
 let isRefreshing = false;
 let pendingRequests: any[] = [];
@@ -115,7 +119,7 @@ const buildApolloLink = (): ApolloLink => {
 
   const authLink = setContext(async (_, { headers }) => {
     const authString = await AsyncStorage.getItem("auth");
-    const authData = JSON.parse(authString ?? "{}") as {
+    const authData = JSON.parse(authString || "{}") as {
       accessToken: string;
     };
     return {
@@ -128,11 +132,41 @@ const buildApolloLink = (): ApolloLink => {
     };
   });
 
-  return ApolloLink.concat(errorLink, ApolloLink.concat(authLink, httpLink));
+  const wsLink = new GraphQLWsLink(
+    createClient({
+      url: `${Constants.manifest?.extra?.graphqlApiUrl.replace("http", "ws")}`,
+      connectionParams: async () => {
+        const authString = await AsyncStorage.getItem("auth");
+        const authData = JSON.parse(authString || "{}") as {
+          accessToken: string;
+        };
+        return {
+          authorization: authData.accessToken
+            ? `Bearer ${authData.accessToken}`
+            : "",
+        };
+      },
+    }),
+  );
+
+  const splitLink = split(
+    ({ query }) => {
+      const definition = getMainDefinition(query);
+      return (
+        definition.kind === "OperationDefinition" &&
+        definition.operation === "subscription"
+      );
+    },
+    wsLink,
+    ApolloLink.concat(authLink, httpLink),
+  );
+
+  return ApolloLink.from([errorLink, splitLink]);
 };
 
-export const generateApolloClient = () =>
-  new ApolloClient({
+export const generateApolloClient = () => {
+  return new ApolloClient({
     cache: new InMemoryCache(),
     link: buildApolloLink(),
   });
+};
