@@ -42,6 +42,7 @@ export default {
       spotifyClientId: process.env.SPOTIFY_CLIENT_ID,
       graphqlApiUrl: process.env.GRAPHQL_API_URL,
       deeplinkUrlPrefix: process.env.DEEPLINK_URL_PREFIX,
+      googleAPIKey: process.env.GOOGLE_API_KEY,
     },
   },
 };

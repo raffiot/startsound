@@ -211,6 +211,8 @@ export const MeDocument = gql`
       id
       username
       birthplace
+      birthplace_pos_lat
+      birthplace_pos_lon
       birthday
       rooms {
         id

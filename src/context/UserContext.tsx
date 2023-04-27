@@ -18,9 +18,16 @@ export type UserDetails = {
   id: string;
   username?: string | null;
   birthplace?: string | null;
+  birthplace_pos_lat?: number | null;
+  birthplace_pos_lon?: number | null;
   birthday?: Date | null;
   rooms: Room[];
 };
+
+export type Birthplace = Pick<
+  UserDetails,
+  "birthplace" | "birthplace_pos_lat" | "birthplace_pos_lon"
+>;
 
 export interface UserContextProps {
   user: UserDetails | null;
@@ -61,6 +68,8 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
         id: user.id,
         input: {
           birthplace: user.birthplace,
+          birthplace_pos_lat: user.birthplace_pos_lat,
+          birthplace_pos_lon: user.birthplace_pos_lon,
           birthday: user.birthday?.toISOString(),
           username: user.username,
         },

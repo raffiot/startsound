@@ -52,6 +52,8 @@ export type MeQuery = {
     id: any;
     username?: string | null;
     birthplace?: string | null;
+    birthplace_pos_lat?: number | null;
+    birthplace_pos_lon?: number | null;
     birthday?: any | null;
     rooms?: Array<{
       __typename?: "Room";
