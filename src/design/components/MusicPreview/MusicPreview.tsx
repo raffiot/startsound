@@ -16,7 +16,13 @@ export const MusicPreview = ({
   onPress,
 }: MusicPreviewProps) => {
   return (
-    <Flex justifyContent="center" alignItems="center">
+    <Flex
+      justifyContent="center"
+      alignItems="center"
+      backgroundColor="lightRose"
+      p="4"
+      rounded="xl"
+    >
       <Box>
         <Image
           source={{
@@ -26,18 +32,15 @@ export const MusicPreview = ({
           width={128}
           height={128}
         />
-        <SpotifyPlay
-          isPlaying={isPlaying}
-          onPress={onPress}
-          style={{
-            position: "absolute",
-            bottom: 32,
-            left: 32,
-          }}
-        />
       </Box>
-      <Box>
-        <Text fontSize="lg">{`${title} - ${artist}`}</Text>
+      <Box flexDir="row" pt="2">
+        <SpotifyPlay isPlaying={isPlaying} onPress={onPress} />
+        <Box pl="4">
+          <Text fontSize="lg" color="aqua">
+            {title}
+          </Text>
+          <Text color="aqua">{artist}</Text>
+        </Box>
       </Box>
     </Flex>
   );

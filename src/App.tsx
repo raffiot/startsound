@@ -14,6 +14,7 @@ export default function App() {
     "Unbounded-Regular": require("../assets/fonts/Unbounded-Regular.ttf"),
     "Unbounded-Medium": require("../assets/fonts/Unbounded-Medium.ttf"),
     "Unbounded-Bold": require("../assets/fonts/Unbounded-Bold.ttf"),
+    "Unbounded-ExtraBold": require("../assets/fonts/Unbounded-ExtraBold.ttf"),
     "Pacifico-Regular": require("../assets/fonts/Pacifico-Regular.ttf"),
     "Caveat-Medium": require("../assets/fonts/Caveat-Medium.ttf"),
   });

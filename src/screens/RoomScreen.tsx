@@ -12,9 +12,9 @@ import {
 } from "native-base";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { UserStackParamList } from "src/navigation/types";
-import { AdditionalContent } from "@/components/Buttons/AdditionalContent";
 import { MusicPreview } from "@/components/MusicPreview/MusicPreview";
 import { useRoomByIdQuery } from "@/graphql/__generated__/hooks";
+import { FreemiumLayout } from "@/components/Layouts/FreemiumLayout";
 
 type Props = NativeStackScreenProps<UserStackParamList, "Room">;
 export const RoomScreen = ({ navigation, route }: Props) => {
@@ -27,20 +27,15 @@ export const RoomScreen = ({ navigation, route }: Props) => {
   });
   const room = data?.roomById ?? null;
 
-  const colorShade = useMemo(() => {
-    const value = Math.floor((room ? room.compatibility_score : 0) / 10) * 100;
-    return value;
-  }, [room]);
-
-  const goBack = useCallback(async () => {
-    if (sound) {
-      const status = await sound.getStatusAsync();
-      if (status.isLoaded && (status as AVPlaybackStatusSuccess).isPlaying) {
-        await sound.unloadAsync();
-      }
-    }
-    return navigation.goBack();
-  }, [navigation, sound]);
+  // const goBack = useCallback(async () => {
+  //   if (sound) {
+  //     const status = await sound.getStatusAsync();
+  //     if (status.isLoaded && (status as AVPlaybackStatusSuccess).isPlaying) {
+  //       await sound.unloadAsync();
+  //     }
+  //   }
+  //   return navigation.goBack();
+  // }, [navigation, sound]);
 
   const playSound = useCallback(async () => {
     if (!sound) return;
@@ -82,75 +77,62 @@ export const RoomScreen = ({ navigation, route }: Props) => {
   const song = room.songs?.[0];
 
   return (
-    <Box my="8" px="4" safeArea>
-      <Box flexDir="row" alignItems="center" justifyContent="space-between">
-        <Pressable onPress={goBack}>
-          <Text fontFamily="heading" fontSize="2xl">
-            {"<-"}
-          </Text>
-        </Pressable>
-        <Heading lineHeight={64} fontFamily="heading" size="2xl">
-          {`With ${room.user.username}`}
-        </Heading>
-        {/* Second arrow transparent to have the text at middle */}
-        <Flex>
-          <Text fontFamily="heading" fontSize="2xl" color="transparent">
-            {"<-"}
-          </Text>
+    <FreemiumLayout title="UNLOCK MORE CONTENT" onPress={() => {}}>
+      <Box px="4" my={8}>
+        <Flex alignItems="center">
+          <Heading size="lg" textAlign="center">
+            YOUR COMPATIBILITY
+          </Heading>
+          <Heading fontFamily="heading" size="2xl">
+            {`WITH ${room.user.username?.toLocaleUpperCase()}`}
+          </Heading>
         </Flex>
+        <ScrollView mb={2}>
+          {/* Compatibility */}
+          <Center pt="8">
+            <Heading
+              size="2xl"
+              color="aqua"
+              fontWeight="800"
+            >{`${room.compatibility_score}%`}</Heading>
+          </Center>
+
+          {/* Attributes */}
+          <Flex pt="8" mx="auto">
+            {(room.features || []).map((item, i) => (
+              <Text
+                fontWeight={400}
+                fontSize="md"
+                py="4"
+                key={`attribute-${i}`}
+                textAlign="center"
+              >
+                {item}
+              </Text>
+            ))}
+          </Flex>
+
+          {/* Song */}
+          <Flex pt="8" alignItems="center">
+            <Heading fontSize="2xl" textAlign="center">
+              YOUR ASTROSONG
+            </Heading>
+            <Center mt="8">
+              {isMusicPlayerLoading ? (
+                <Spinner size="lg" />
+              ) : (
+                <MusicPreview
+                  image={song?.picture_url || ""}
+                  artist={song?.artist || ""}
+                  title={song?.name || "Song ?"}
+                  onPress={playSound}
+                  isPlaying={songIsPlaying}
+                />
+              )}
+            </Center>
+          </Flex>
+        </ScrollView>
       </Box>
-      <ScrollView mb={8}>
-        {/* Compatibility */}
-        <Center pt="12">
-          <Box
-            rounded="full"
-            borderWidth="6"
-            borderColor={`rose.${colorShade}`}
-            p="8"
-          >
-            <Text
-              fontFamily="heading"
-              fontSize="4xl"
-              color={`rose.${colorShade}`}
-            >{`${room.compatibility_score}%`}</Text>
-          </Box>
-        </Center>
-
-        {/* Attributes */}
-        <Flex pt="8">
-          <Heading fontFamily="heading" fontSize="2xl" lineHeight={64}>
-            Your Compatibility:
-          </Heading>
-          {(room.features || []).map((item, i) => (
-            <Text fontSize="2xl" p="2" key={`attribute-${i}`}>
-              {item}
-            </Text>
-          ))}
-          <Center pt="4">
-            <AdditionalContent title="🔓 Unlock more attributes" />
-          </Center>
-        </Flex>
-
-        {/* Song */}
-        <Flex pt="12">
-          <Heading fontFamily="heading" fontSize="2xl" lineHeight={32}>
-            Your astro song:
-          </Heading>
-          <Center mt="4">
-            {isMusicPlayerLoading ? (
-              <Spinner size="lg" />
-            ) : (
-              <MusicPreview
-                image={song?.picture_url || ""}
-                artist={song?.artist || ""}
-                title={song?.name || "Song ?"}
-                onPress={playSound}
-                isPlaying={songIsPlaying}
-              />
-            )}
-          </Center>
-        </Flex>
-      </ScrollView>
-    </Box>
+    </FreemiumLayout>
   );
 };

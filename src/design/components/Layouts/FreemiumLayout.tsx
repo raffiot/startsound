@@ -21,7 +21,7 @@ export const FreemiumLayout = ({
       </Box>
       <Pressable
         bottom={0}
-        position="absolute"
+        position="relative"
         width="100%"
         height="10%"
         borderTopRadius={32}
@@ -31,6 +31,7 @@ export const FreemiumLayout = ({
         pt="2"
         pb={insets.bottom}
         onPress={onPress}
+        shadow="7"
       >
         <Text fontWeight={700} fontSize="2xl" color="#DCFEFF">
           {title}

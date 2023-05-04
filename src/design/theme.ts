@@ -21,6 +21,9 @@ const newTheme = {
       700: {
         normal: "Unbounded-Bold",
       },
+      800: {
+        normal: "Unbounded-ExtraBold",
+      },
     },
     Caveat: {
       400: {
