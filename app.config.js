@@ -2,8 +2,8 @@ import "dotenv/config";
 
 export default {
   expo: {
-    name: "soundstar",
-    slug: "soundstar",
+    name: "astrojuke",
+    slug: "astrojuke",
     version: "1.0.0",
     orientation: "portrait",
     icon: "./assets/icon.png",
@@ -25,24 +25,32 @@ export default {
         foregroundImage: "./assets/adaptive-icon.png",
         backgroundColor: "#FFFFFF",
       },
+      package: "com.milkapp.astrojuke",
+      versionCode: 1,
+    },
+    ios: {
+      bundleIdentifier: "com.milkapp.astrojuke",
     },
     web: {
       favicon: "./assets/favicon.png",
     },
-    scheme: process.env.DEEPLINK_URL_PREFIX,
+    scheme: "astrojuke",
     extra: {
-      firebaseApiKey: process.env.FIREBASE_API_KEY,
-      firebaseAuthDomain: process.env.FIREBASE_AUTH_DOMAIN,
-      firebaseProjectId: process.env.FIREBASE_PROJECT_ID,
-      firebaseStorageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-      firebaseMessagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-      firebaseAppId: process.env.FIREBASE_APP_ID,
-      firebaseMeasurementId: process.env.FIREBASE_MEASUREMENT_ID,
-      firebaseRegion: process.env.FIREBASE_REGION,
+      // firebaseApiKey: process.env.FIREBASE_API_KEY,
+      // firebaseAuthDomain: process.env.FIREBASE_AUTH_DOMAIN,
+      // firebaseProjectId: process.env.FIREBASE_PROJECT_ID,
+      // firebaseStorageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+      // firebaseMessagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+      // firebaseAppId: process.env.FIREBASE_APP_ID,
+      // firebaseMeasurementId: process.env.FIREBASE_MEASUREMENT_ID,
+      // firebaseRegion: process.env.FIREBASE_REGION,
+      // deeplinkUrlPrefix: process.env.DEEPLINK_URL_PREFIX,
       spotifyClientId: process.env.SPOTIFY_CLIENT_ID,
       graphqlApiUrl: process.env.GRAPHQL_API_URL,
-      deeplinkUrlPrefix: process.env.DEEPLINK_URL_PREFIX,
       googleAPIKey: process.env.GOOGLE_API_KEY,
+      eas: {
+        projectId: "7934425d-ab01-4282-bf34-c95a252c55f2",
+      },
     },
   },
 };

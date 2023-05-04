@@ -7,7 +7,9 @@
     "web": "expo start --web",
     "storybook": "start-storybook -p 7007",
     "codegen": "graphql-codegen --config codegen.yml",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "build-android-preview": "eas build -p android --profile preview",
+    "build-ios-dev": "eas build -p ios --profile development"
   },
   "dependencies": {
     "@apollo/client": "^3.7.2",
@@ -15,9 +17,11 @@
     "@react-native-community/datetimepicker": "6.5.2",
     "@react-navigation/native": "^6.0.13",
     "@react-navigation/native-stack": "^6.9.1",
+    "dotenv": "^16.0.3",
     "expo": "~47.0.6",
     "expo-auth-session": "~3.7.2",
     "expo-av": "~13.0.1",
+    "expo-dev-client": "~2.0.1",
     "expo-font": "~11.0.1",
     "expo-linear-gradient": "~12.0.1",
     "expo-random": "~13.0.0",
@@ -53,7 +57,7 @@
     "@storybook/react-native": "^5.3.27",
     "@storybook/react-native-server": "^5.3.23",
     "@types/lodash.uniqby": "^4.7.7",
-    "@types/react": "~18.0.24",
+    "@types/react": "17.0.21",
     "@types/react-native": "~0.70.6",
     "babel-loader": "^8.3.0",
     "babel-plugin-module-resolver": "^4.1.0",
