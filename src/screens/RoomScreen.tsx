@@ -70,6 +70,10 @@ export const RoomScreen = ({ navigation, route }: Props) => {
       : undefined;
   }, [sound]);
 
+  const navigateCheckout = useCallback(() => {
+    return navigation.navigate("Checkout");
+  }, [navigation]);
+
   if (loading || !room) {
     return <Spinner />;
   }
@@ -77,7 +81,7 @@ export const RoomScreen = ({ navigation, route }: Props) => {
   const song = room.songs?.[0];
 
   return (
-    <FreemiumLayout title="UNLOCK MORE CONTENT" onPress={() => {}}>
+    <FreemiumLayout title="UNLOCK MORE CONTENT" onPress={navigateCheckout}>
       <Box px="4" my={8}>
         <Flex alignItems="center">
           <Heading size="lg" textAlign="center">

@@ -11,6 +11,7 @@ export type AuthStackParamList = {
 export type UserStackParamList = {
   Home: undefined;
   Room: { id: string };
+  Checkout: undefined;
 };
 
 export type MainStackParamList = {

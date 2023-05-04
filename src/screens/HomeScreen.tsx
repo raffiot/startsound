@@ -130,6 +130,10 @@ export const HomeScreen = ({ navigation }: Props) => {
     [navigation],
   );
 
+  const navigateCheckout = useCallback(() => {
+    return navigation.navigate("Checkout");
+  }, [navigation]);
+
   const onShareLink = useCallback(async () => {
     try {
       await Share.share({
@@ -141,7 +145,7 @@ export const HomeScreen = ({ navigation }: Props) => {
   }, [redirectUri]);
 
   return (
-    <FreemiumLayout title="UNLOCK MORE CONTENT" onPress={() => {}}>
+    <FreemiumLayout title="UNLOCK MORE CONTENT" onPress={navigateCheckout}>
       <Box my="12" width="90%" flex="1" mx="auto">
         <Center>
           <Heading size="xl" textAlign="center">
@@ -185,7 +189,7 @@ export const HomeScreen = ({ navigation }: Props) => {
               {!loading ? (
                 <FlatList
                   height="100%"
-                  mt="8"
+                  mt="4"
                   bg="lightRose"
                   borderRadius={32}
                   contentContainerStyle={{ paddingBottom: 128 }}
