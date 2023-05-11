@@ -33,7 +33,7 @@ export const FreemiumLayout = ({
         onPress={onPress}
         shadow="7"
       >
-        <Text fontWeight={700} fontSize="2xl" color="#DCFEFF">
+        <Text fontWeight={700} fontSize="xl" color="#DCFEFF">
           {title}
         </Text>
       </Pressable>

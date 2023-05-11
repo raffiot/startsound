@@ -87,11 +87,11 @@ export const RoomScreen = ({ navigation, route }: Props) => {
           <Heading size="lg" textAlign="center">
             YOUR COMPATIBILITY
           </Heading>
-          <Heading fontFamily="heading" size="2xl">
+          <Heading fontFamily="heading" size="2xl" textAlign="center">
             {`WITH ${room.user.username?.toLocaleUpperCase()}`}
           </Heading>
         </Flex>
-        <ScrollView mb={2}>
+        <ScrollView mb="10%">
           {/* Compatibility */}
           <Center pt="8">
             <Heading
@@ -101,22 +101,8 @@ export const RoomScreen = ({ navigation, route }: Props) => {
             >{`${room.compatibility_score}%`}</Heading>
           </Center>
 
-          <Center mt="8">
-            {isMusicPlayerLoading ? (
-              <Spinner size="lg" />
-            ) : (
-              <MusicPreview
-                image={song?.picture_url || ""}
-                artist={song?.artist || ""}
-                title={song?.name || "Song ?"}
-                onPress={playSound}
-                isPlaying={songIsPlaying}
-              />
-            )}
-          </Center>
-
           {/* Attributes */}
-          <Flex pt="8" mx="auto">
+          <Flex pt="2" mx="auto">
             {(room.features || []).map((item, i) => (
               <Text
                 fontWeight={400}
@@ -131,6 +117,19 @@ export const RoomScreen = ({ navigation, route }: Props) => {
           </Flex>
 
           {/* Song */}
+          <Center pt="4">
+            {isMusicPlayerLoading ? (
+              <Spinner size="lg" />
+            ) : (
+              <MusicPreview
+                image={song?.picture_url || ""}
+                artist={song?.artist || ""}
+                title={song?.name || "Song ?"}
+                onPress={playSound}
+                isPlaying={songIsPlaying}
+              />
+            )}
+          </Center>
           {/* <Flex pt="8" alignItems="center">
             <Heading fontSize="2xl" textAlign="center">
               YOUR ASTROSONG

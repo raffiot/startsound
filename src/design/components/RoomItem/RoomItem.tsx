@@ -34,7 +34,7 @@ export const RoomItem = ({
         flex={1}
         flexWrap="wrap"
       >
-        <Text fontWeight={700} color="#4C494F" fontSize="2xl">
+        <Text fontWeight={700} color="#4C494F" fontSize="xl">
           {title}
         </Text>
       </Pressable>

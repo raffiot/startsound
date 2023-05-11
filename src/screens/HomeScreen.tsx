@@ -149,7 +149,7 @@ export const HomeScreen = ({ navigation }: Props) => {
 
   return (
     <FreemiumLayout title="UNLOCK MORE CONTENT" onPress={navigateCheckout}>
-      <Box my="12" width="90%" flex="1" mx="auto">
+      <Box mb="8" width="90%" flex="1" mx="auto">
         <Center>
           <Heading size="xl" textAlign="center">
             WELCOME!
@@ -191,11 +191,11 @@ export const HomeScreen = ({ navigation }: Props) => {
               </Heading>
               {!loading ? (
                 <FlatList
-                  height="100%"
+                  height="70%"
                   mt="4"
                   bg="lightRose"
                   borderRadius={32}
-                  contentContainerStyle={{ paddingBottom: 128 }}
+                  contentContainerStyle={{ paddingBottom: "40%" }}
                   data={data?.me?.rooms}
                   showsVerticalScrollIndicator={false}
                   renderItem={({ item }) => {
