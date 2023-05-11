@@ -16,7 +16,8 @@
       },
       "env": {
         "SPOTIFY_CLIENT_ID": "af0cdc5546504726ae0d449c14277981",
-        "GRAPHQL_API_URL": "https://starsound.fly.dev"
+        "GRAPHQL_API_URL": "https://starsound.fly.dev",
+        "DEEPLINK_URL_PREFIX": "https://starsound.fly.dev/invite/main/home"
       }
     }
   },

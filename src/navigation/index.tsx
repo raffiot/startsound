@@ -8,7 +8,6 @@ import { UserStack } from "./UserStack";
 import { AuthStack } from "./AuthStack";
 import { MainStackParamList } from "./types";
 import Theme from "./theme";
-import { Box } from "native-base";
 
 const SCREEN_OPTIONS = {
   headerShown: false,

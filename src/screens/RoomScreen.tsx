@@ -97,8 +97,22 @@ export const RoomScreen = ({ navigation, route }: Props) => {
             <Heading
               size="2xl"
               color="aqua"
-              fontWeight="800"
+              fontWeight={700}
             >{`${room.compatibility_score}%`}</Heading>
+          </Center>
+
+          <Center mt="8">
+            {isMusicPlayerLoading ? (
+              <Spinner size="lg" />
+            ) : (
+              <MusicPreview
+                image={song?.picture_url || ""}
+                artist={song?.artist || ""}
+                title={song?.name || "Song ?"}
+                onPress={playSound}
+                isPlaying={songIsPlaying}
+              />
+            )}
           </Center>
 
           {/* Attributes */}
@@ -117,7 +131,7 @@ export const RoomScreen = ({ navigation, route }: Props) => {
           </Flex>
 
           {/* Song */}
-          <Flex pt="8" alignItems="center">
+          {/* <Flex pt="8" alignItems="center">
             <Heading fontSize="2xl" textAlign="center">
               YOUR ASTROSONG
             </Heading>
@@ -134,7 +148,7 @@ export const RoomScreen = ({ navigation, route }: Props) => {
                 />
               )}
             </Center>
-          </Flex>
+          </Flex> */}
         </ScrollView>
       </Box>
     </FreemiumLayout>

@@ -27,7 +27,13 @@ export const RoomItem = ({
       {...props}
     >
       <Favorite isFavorite={isFavorite} onPress={onPressFavorite} />
-      <Pressable onPress={onPressTitle} pl="4">
+      <Pressable
+        onPress={onPressTitle}
+        px="4"
+        flexDir="row"
+        flex={1}
+        flexWrap="wrap"
+      >
         <Text fontWeight={700} color="#4C494F" fontSize="2xl">
           {title}
         </Text>

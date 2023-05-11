@@ -35,9 +35,9 @@ export const useLogin = () => {
           accessToken: data.login?.access_token,
           refreshToken: data.login?.refresh_token,
         });
-      } else {
-        console.log("ERROR: Loggin didnt worked");
+        return;
       }
+      throw new Error("Log in mutation didnt worked");
     },
   });
 
@@ -51,11 +51,7 @@ export const useLogin = () => {
 
   useEffect(() => {
     if (response?.type === "success") {
-      try {
-        loginMutation({ variables: { input: { code: response.params.code } } });
-      } catch (error) {
-        console.log(error);
-      }
+      loginMutation({ variables: { input: { code: response.params.code } } });
     }
   }, [response]);
 

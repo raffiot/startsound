@@ -9,7 +9,7 @@ export const useRoomRedirection = (navigation: any) => {
       if (data.roomCreate?.id) {
         return navigation.navigate("Room", { id: data.roomCreate.id });
       } else {
-        console.log("ERROR: Room was not created");
+        throw new Error("Fail to create the room");
       }
     },
   });
@@ -18,9 +18,6 @@ export const useRoomRedirection = (navigation: any) => {
     useRoomByUserIdQuery({
       variables: { user_id: queryParams?.user_id },
       skip: !queryParams?.user_id,
-      onError: (error) => {
-        console.log(error, " error");
-      },
       onCompleted: (data) => {
         if (data.roomByUserId?.id) {
           return navigation.navigate("Room", { id: data.roomByUserId.id });

@@ -1,5 +1,5 @@
 import React, { memo, useState, useCallback, useContext } from "react";
-import { Share } from "react-native";
+import { Alert, Share } from "react-native";
 import uniqBy from "lodash.uniqby";
 import * as Linking from "expo-linking";
 import {
@@ -12,6 +12,7 @@ import {
   FlatList,
   Spinner,
 } from "native-base";
+import Constants from "expo-constants";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { UserStackParamList } from "@/navigation/types";
 import { RoomItem } from "@/components/RoomItem/RoomItem";
@@ -82,12 +83,14 @@ export const HomeScreen = ({ navigation }: Props) => {
   const { queryParams } = (
     url ? Linking.parse(url) : { queryParams: null }
   ) as { queryParams: { user_id: string } | null };
-  roomRedirection(queryParams);
+  try {
+    roomRedirection(queryParams);
+  } catch (error) {
+    Alert.alert(`Fail to create your room: ${error}`);
+  }
 
   const { user } = useContext(UserContext);
-  const redirectUri = Linking.createURL("main/home", {
-    queryParams: { user_id: user?.id },
-  });
+  const redirectUri = `${Constants.manifest?.extra?.spotifyClientId}?user_id=${user?.id}`;
 
   const { data, loading, subscribeToMore } = useMeQuery({
     fetchPolicy: "network-only",

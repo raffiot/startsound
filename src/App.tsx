@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect } from "react";
 import { ImageBackground } from "react-native";
-import { NativeBaseProvider, Box } from "native-base";
+import { NativeBaseProvider } from "native-base";
+import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { CustomApolloProvider } from "./apollo/CustomApolloProvider";
@@ -46,6 +47,7 @@ export default function App() {
               source={require("../assets/background.png")}
               onLayout={onLayoutRootView}
             >
+              <StatusBar translucent={true} />
               <RootNavigation />
             </ImageBackground>
           </UserProvider>

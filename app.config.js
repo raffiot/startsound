@@ -27,6 +27,19 @@ export default {
       },
       package: "com.milkapp.astrojuke",
       versionCode: 1,
+      intentFilters: [
+        {
+          action: "VIEW",
+          data: [
+            {
+              scheme: "https",
+              host: "starsound.fly.dev",
+              pathPrefix: "/invite",
+            },
+          ],
+          category: ["BROWSABLE", "DEFAULT"],
+        },
+      ],
     },
     ios: {
       bundleIdentifier: "com.milkapp.astrojuke",
@@ -44,7 +57,7 @@ export default {
       // firebaseAppId: process.env.FIREBASE_APP_ID,
       // firebaseMeasurementId: process.env.FIREBASE_MEASUREMENT_ID,
       // firebaseRegion: process.env.FIREBASE_REGION,
-      // deeplinkUrlPrefix: process.env.DEEPLINK_URL_PREFIX,
+      deeplinkUrlPrefix: process.env.DEEPLINK_URL_PREFIX,
       spotifyClientId: process.env.SPOTIFY_CLIENT_ID,
       graphqlApiUrl: process.env.GRAPHQL_API_URL,
       googleAPIKey: process.env.GOOGLE_API_KEY,

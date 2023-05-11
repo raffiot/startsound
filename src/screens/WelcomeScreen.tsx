@@ -7,6 +7,7 @@ import { useLogin } from "@/hooks/useLogin";
 import { useEffect } from "react";
 import { UserContext } from "@/context/UserContext";
 import { SafeAreaLayout } from "@/components/Layouts/SafeAreaLayout";
+import { Alert } from "react-native";
 
 type Props = NativeStackScreenProps<AuthStackParamList, "Welcome">;
 export const WelcomeScreen = ({ navigation }: Props) => {
@@ -16,7 +17,11 @@ export const WelcomeScreen = ({ navigation }: Props) => {
 
   const connectSpotify = useCallback(async () => {
     setLoading(true);
-    await login();
+    try {
+      await login();
+    } catch (error) {
+      Alert.alert(`Failed to connect to spotify: ${error}`);
+    }
     setLoading(false);
   }, [login]);
 
