@@ -46,6 +46,7 @@ export const BirthPlaceScreen = ({ route, navigation }: Props) => {
             value: birthplace,
             onChange: setBirthplace,
           }}
+          zIndex={2}
         />
         <Box mt="auto">
           {isLoading ? (
