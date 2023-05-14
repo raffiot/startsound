@@ -13,6 +13,7 @@ export default gql`
         name
         picture_url
         preview_url
+        spotify_url
         artist
       }
       user {

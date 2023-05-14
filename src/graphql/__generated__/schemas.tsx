@@ -95,6 +95,7 @@ export type Song = {
   picture_url?: Maybe<Scalars["String"]>;
   preview_url?: Maybe<Scalars["String"]>;
   room_id: Scalars["UUID"];
+  spotify_url?: Maybe<Scalars["String"]>;
 };
 
 export type Subscription = {

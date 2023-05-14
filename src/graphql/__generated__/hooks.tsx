@@ -281,6 +281,7 @@ export const RoomByIdDocument = gql`
         name
         picture_url
         preview_url
+        spotify_url
         artist
       }
       user {

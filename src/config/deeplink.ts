@@ -19,6 +19,7 @@ export const linkingConfig: LinkingOptions<MainStackParamList> = {
           },
         },
       },
+      AuthStack: "*",
     },
   },
   // deal with deeplinks when the app is closed

@@ -32,6 +32,7 @@ export type Birthplace = Pick<
 export interface UserContextProps {
   user: UserDetails | null;
   isProfileComplete: boolean;
+  isLoading: boolean;
   setUser: (user: MeQuery["me"]) => Promise<void>;
   updateUser: (user: UserDetails) => Promise<void>;
 }
@@ -39,6 +40,7 @@ export interface UserContextProps {
 const UserContext = createContext<UserContextProps>({
   user: null,
   isProfileComplete: false,
+  isLoading: true,
   setUser: async () => {},
   updateUser: async () => {},
 });
@@ -78,7 +80,9 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
     setUserState(user);
   };
 
-  useMeQuery({ onCompleted: (data) => setUser(data.me) });
+  const { loading: isLoading } = useMeQuery({
+    onCompleted: (data) => setUser(data.me),
+  });
 
   return (
     <UserContext.Provider
@@ -86,6 +90,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
         user,
         setUser,
         updateUser,
+        isLoading,
         isProfileComplete: Boolean(user?.username) && Boolean(user?.birthday),
       }}
     >

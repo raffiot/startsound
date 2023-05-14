@@ -125,6 +125,7 @@ export const RoomScreen = ({ navigation, route }: Props) => {
                 image={song?.picture_url || ""}
                 artist={song?.artist || ""}
                 title={song?.name || "Song ?"}
+                link={song?.spotify_url || ""}
                 onPress={playSound}
                 isPlaying={songIsPlaying}
               />

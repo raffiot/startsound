@@ -87,6 +87,7 @@ export type RoomByIdQuery = {
       name?: string | null;
       picture_url?: string | null;
       preview_url?: string | null;
+      spotify_url?: string | null;
       artist?: string | null;
     } | null> | null;
     user: { __typename?: "UserRestricted"; id: any; username?: string | null };

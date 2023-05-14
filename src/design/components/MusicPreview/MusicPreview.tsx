@@ -1,3 +1,4 @@
+import * as Linking from "expo-linking";
 import { Box, Image, Pressable, Text } from "native-base";
 import { SpotifyPlay } from "../Buttons/SpotifyPlay";
 
@@ -5,6 +6,7 @@ export type MusicPreviewProps = {
   title: string;
   artist: string;
   image: string;
+  link: string;
   isPlaying: boolean;
   onPress: () => void;
 };
@@ -12,9 +14,14 @@ export const MusicPreview = ({
   title,
   artist,
   image,
+  link,
   isPlaying,
   onPress,
 }: MusicPreviewProps) => {
+  const onSpotifyPress = () => {
+    Linking.openURL(link);
+  };
+
   return (
     <Box
       justifyContent="flex-start"
@@ -26,7 +33,7 @@ export const MusicPreview = ({
       rounded="xl"
     >
       <Box>
-        <Pressable pb="2">
+        <Pressable pb="2" onPress={onSpotifyPress}>
           <Image
             source={require("../../../../assets/button-icons/Spotify_Logo_CMYK_Black.png")}
             alt="spotify_link"
