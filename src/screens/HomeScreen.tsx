@@ -195,7 +195,7 @@ export const HomeScreen = ({ navigation }: Props) => {
                   mt="4"
                   bg="lightRose"
                   borderRadius={32}
-                  contentContainerStyle={{ paddingBottom: "40%" }}
+                  contentContainerStyle={{ paddingBottom: "45%" }}
                   data={data?.me?.rooms}
                   showsVerticalScrollIndicator={false}
                   renderItem={({ item }) => {

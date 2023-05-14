@@ -16,7 +16,7 @@ export const FreemiumLayout = ({
   const insets = useSafeAreaInsets();
   return (
     <>
-      <Box flex="1" safeArea>
+      <Box flex="1" mt={insets.top}>
         {children}
       </Box>
       <Pressable

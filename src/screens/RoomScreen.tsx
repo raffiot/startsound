@@ -82,7 +82,7 @@ export const RoomScreen = ({ navigation, route }: Props) => {
 
   return (
     <FreemiumLayout title="UNLOCK MORE CONTENT" onPress={navigateCheckout}>
-      <Box px="4" my={8}>
+      <Box px="4" mb={8} flex="1">
         <Flex alignItems="center">
           <Heading size="lg" textAlign="center">
             YOUR COMPATIBILITY
@@ -91,7 +91,7 @@ export const RoomScreen = ({ navigation, route }: Props) => {
             {`WITH ${room.user.username?.toLocaleUpperCase()}`}
           </Heading>
         </Flex>
-        <ScrollView mb="10%">
+        <ScrollView>
           {/* Compatibility */}
           <Center pt="8">
             <Heading
