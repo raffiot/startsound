@@ -19,6 +19,13 @@ export const FreemiumLayout = ({
       <Box flex="1" mt={insets.top}>
         {children}
       </Box>
+    </>
+  );
+  return (
+    <>
+      <Box flex="1" mt={insets.top}>
+        {children}
+      </Box>
       <Pressable
         bottom={0}
         position="relative"
