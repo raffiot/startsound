@@ -8,9 +8,7 @@
       }
     },
     "preview": {
-      "android": {
-        "buildType": "apk"
-      },
+      "android": {},
       "ios": {
         "buildConfiguration": "Debug"
       },

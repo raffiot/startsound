@@ -26,10 +26,11 @@ export default {
         backgroundColor: "#FFFFFF",
       },
       package: "com.milkapp.astrojuke",
-      versionCode: 1,
+      versionCode: 3,
       intentFilters: [
         {
           action: "VIEW",
+          autoVerify: true,
           data: [
             {
               scheme: "https",
