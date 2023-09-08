@@ -26,7 +26,7 @@ export default {
         backgroundColor: "#FFFFFF",
       },
       package: "com.milkapp.astrojuke",
-      versionCode: 4,
+      versionCode: 5,
       intentFilters: [
         {
           action: "VIEW",

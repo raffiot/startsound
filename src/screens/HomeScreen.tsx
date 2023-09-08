@@ -12,7 +12,6 @@ import {
   FlatList,
   Spinner,
 } from "native-base";
-import Constants from "expo-constants";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { UserStackParamList } from "@/navigation/types";
 import { RoomItem } from "@/components/RoomItem/RoomItem";
@@ -90,7 +89,8 @@ export const HomeScreen = ({ navigation }: Props) => {
   }
 
   const { user } = useContext(UserContext);
-  const redirectUri = `${Constants.manifest?.extra?.spotifyClientId}?user_id=${user?.id}`;
+
+  const redirectUri = `https://starsound.fly.dev/invite/main/home?user_id=${user?.id}`;
 
   const { data, loading, subscribeToMore } = useMeQuery({
     fetchPolicy: "network-only",
